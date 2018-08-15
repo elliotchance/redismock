@@ -2084,3 +2084,143 @@ func (m *ClientMock) Command() *redis.CommandsInfoCmd {
 
 	return mockArgs.Get(0).(*redis.CommandsInfoCmd)
 }
+
+func (m *ClientMock) ClientKillByFilter(keys ...string) *redis.IntCmd {
+	if !m.hasStub("ClientKillByFilter") {
+		return m.client.ClientKillByFilter(keys...)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.IntCmd)
+}
+
+func (m *ClientMock) MemoryUsage(key string, samples ...int) *redis.IntCmd {
+	if !m.hasStub("MemoryUsage") {
+		return m.client.MemoryUsage(key, samples...)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.IntCmd)
+}
+
+func (m *ClientMock) ReadOnly() *redis.StatusCmd {
+	if !m.hasStub("ReadOnly") {
+		return m.client.ReadOnly()
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.StatusCmd)
+}
+
+func (m *ClientMock) ReadWrite() *redis.StatusCmd {
+	if !m.hasStub("ReadWrite") {
+		return m.client.ReadWrite()
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.StatusCmd)
+}
+
+func (m *ClientMock) XAdd(stream, id string, values map[string]interface{}) *redis.StringCmd {
+	if !m.hasStub("XAdd") {
+		return m.client.XAdd(stream, id, values)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.StringCmd)
+}
+
+func (m *ClientMock) XLen(stream string) *redis.IntCmd {
+	if !m.hasStub("XLen") {
+		return m.client.XLen(stream)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.IntCmd)
+}
+
+func (m *ClientMock) XAddExt(opt *redis.XAddExt) *redis.StringCmd {
+	if !m.hasStub("XAddExt") {
+		return m.client.XAddExt(opt)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.StringCmd)
+}
+
+func (m *ClientMock) XRange(stream, start, stop string) *redis.XMessageSliceCmd {
+	if !m.hasStub("XRange") {
+		return m.client.XRange(stream, start, stop)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.XMessageSliceCmd)
+}
+
+func (m *ClientMock) XRangeN(stream, start, stop string, count int64) *redis.XMessageSliceCmd {
+	if !m.hasStub("XRangeN") {
+		return m.client.XRangeN(stream, start, stop, count)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.XMessageSliceCmd)
+}
+
+func (m *ClientMock) XRead(streams ...string) *redis.XStreamSliceCmd {
+	if !m.hasStub("XRead") {
+		return m.client.XRead(streams...)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.XStreamSliceCmd)
+}
+
+func (m *ClientMock) XReadN(count int64, streams ...string) *redis.XStreamSliceCmd {
+	if !m.hasStub("XReadN") {
+		return m.client.XReadN(count, streams...)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.XStreamSliceCmd)
+}
+
+func (m *ClientMock) XReadExt(opt *redis.XReadExt) *redis.XStreamSliceCmd {
+	if !m.hasStub("XReadExt") {
+		return m.client.XReadExt(opt)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.XStreamSliceCmd)
+}
+
+func (m *ClientMock) XRevRange(stream string, start, stop string) *redis.XMessageSliceCmd {
+	if !m.hasStub("XRevRange") {
+		return m.client.XRevRange(stream, start, stop)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.XMessageSliceCmd)
+}
+
+func (m *ClientMock) XRevRangeN(stream string, start, stop string, count int64) *redis.XMessageSliceCmd {
+	if !m.hasStub("XRevRangeN") {
+		return m.client.XRevRangeN(stream, start, stop, count)
+	}
+
+	mockArgs := m.Called()
+
+	return mockArgs.Get(0).(*redis.XMessageSliceCmd)
+}
