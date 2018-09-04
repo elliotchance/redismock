@@ -19,8 +19,8 @@
 [[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
-  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
-  version = "v1.1.0"
+  revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
+  version = "v1.1.1"
 
 [[projects]]
   name = "github.com/go-redis/redis"
@@ -34,8 +34,8 @@
     "internal/singleflight",
     "internal/util"
   ]
-  revision = "480db94d33e6088e08d628833b6c0705451d24bb"
-  version = "v6.13.2"
+  revision = "f3bba01df2026fc865f7782948845db9cf44cf23"
+  version = "v6.14.1"
 
 [[projects]]
   name = "github.com/gomodule/redigo"
@@ -76,7 +76,7 @@
     "parse",
     "pm"
   ]
-  revision = "46796da1b0b4794e1e341883a399f12cc7574b55"
+  revision = "b942cacc89fe49895d145e8b360612a9a51d0423"
 
 [solve-meta]
   analyzer-name = "dep"
