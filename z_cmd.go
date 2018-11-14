@@ -1,6 +1,26 @@
 package redismock
 
-import "github.com/go-redis/redis"
+import (
+	"time"
+
+	"github.com/go-redis/redis"
+)
+
+func (m *ClientMock) BZPopMax(timeout time.Duration, keys ...string) *redis.ZWithKeyCmd {
+	if !m.hasStub("BZPopMax") {
+		return m.client.BZPopMax(timeout, keys...)
+	}
+
+	return m.Called().Get(0).(*redis.ZWithKeyCmd)
+}
+
+func (m *ClientMock) BZPopMin(timeout time.Duration, keys ...string) *redis.ZWithKeyCmd {
+	if !m.hasStub("BZPopMin") {
+		return m.client.BZPopMin(timeout, keys...)
+	}
+
+	return m.Called().Get(0).(*redis.ZWithKeyCmd)
+}
 
 func (m *ClientMock) ZPopMax(key string, count ...int64) *redis.ZSliceCmd {
 	if !m.hasStub("ZPopMax") {

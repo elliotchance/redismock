@@ -31,7 +31,8 @@
 
 [[constraint]]
   name = "github.com/go-redis/redis"
-  version = "6.13.2"
+  branch = "master"
+  source = "github.com/go-redis/redis"
 
 [[constraint]]
   name = "github.com/stretchr/testify"
