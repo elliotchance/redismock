@@ -2,6 +2,14 @@ package redismock
 
 import "github.com/go-redis/redis"
 
+func (m *ClientMock) XDel(stream string, ids ...string) *redis.IntCmd {
+	if !m.hasStub("XDel") {
+		return m.client.XDel(stream, ids...)
+	}
+
+	return m.Called().Get(0).(*redis.IntCmd)
+}
+
 func (m *ClientMock) XAdd(a *redis.XAddArgs) *redis.StringCmd {
 	if !m.hasStub("XAdd") {
 		return m.client.XAdd(a)
