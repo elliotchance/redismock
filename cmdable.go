@@ -1192,3 +1192,11 @@ func (m *ClientMock) ReadWrite() *redis.StatusCmd {
 
 	return m.Called().Get(0).(*redis.StatusCmd)
 }
+
+func (m *ClientMock) ClientID() *redis.IntCmd {
+	if !m.hasStub("ClientID") {
+		return m.client.ClientID()
+	}
+
+	return m.Called().Get(0).(*redis.IntCmd)
+}

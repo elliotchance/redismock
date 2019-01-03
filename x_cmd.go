@@ -169,3 +169,11 @@ func (m *ClientMock) XTrimApprox(key string, maxLen int64) *redis.IntCmd {
 
 	return m.Called().Get(0).(*redis.IntCmd)
 }
+
+func (m *ClientMock) XGroupCreateMkStream(stream, group, start string) *redis.StatusCmd {
+	if !m.hasStub("XGroupCreateMkStream") {
+		return m.client.XGroupCreateMkStream(stream, group, start)
+	}
+
+	return m.Called().Get(0).(*redis.StatusCmd)
+}
