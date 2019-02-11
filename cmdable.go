@@ -1017,6 +1017,14 @@ func (m *ClientMock) ClusterKeySlot(key string) *redis.IntCmd {
 	return m.Called().Get(0).(*redis.IntCmd)
 }
 
+func (m *ClientMock) ClusterGetKeysInSlot(slot int, count int) *redis.StringSliceCmd {
+	if !m.hasStub("ClusterGetKeysInSlot") {
+		return m.client.ClusterGetKeysInSlot(slot, count)
+	}
+
+	return m.Called().Get(0).(*redis.StringSliceCmd)
+}
+
 func (m *ClientMock) ClusterCountFailureReports(nodeID string) *redis.IntCmd {
 	if !m.hasStub("ClusterCountFailureReports") {
 		return m.client.ClusterCountFailureReports(nodeID)
