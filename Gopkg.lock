@@ -13,8 +13,8 @@
     ".",
     "server"
   ]
-  revision = "3657542c8629876a1fa83e0b30a0246a67ffa652"
-  version = "v2.4.5"
+  revision = "7aa580c6d4761b53c007d24aa18e730fef3e00d4"
+  version = "v2.4.6"
 
 [[projects]]
   name = "github.com/davecgh/go-spew"
@@ -31,11 +31,10 @@
     "internal/hashtag",
     "internal/pool",
     "internal/proto",
-    "internal/singleflight",
     "internal/util"
   ]
-  revision = "7f89fbac80bcc62ce920b6dbc6ca60238d7725d1"
-  version = "v6.15.0"
+  revision = "d22fde8721cc915a55aeb6b00944a76a92bfeb6e"
+  version = "v6.15.2"
 
 [[projects]]
   name = "github.com/gomodule/redigo"
@@ -64,8 +63,8 @@
     "assert",
     "mock"
   ]
-  revision = "f35b8ab0b5a2cef36673838d662e249dd9c94686"
-  version = "v1.2.2"
+  revision = "ffdc059bfe9ce6a4e144ba849dbedead332c6053"
+  version = "v1.3.0"
 
 [[projects]]
   branch = "master"
@@ -76,11 +75,11 @@
     "parse",
     "pm"
   ]
-  revision = "1e6e6e1918e02ddf02e667e88e8aa756942448c5"
+  revision = "8bfc7677f583b35a5663a9dd934c08f3b5774bbb"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d05941341626931bf9b128ccbbd1a3723ed49226d3a19d7b4266ae8e70f726e9"
+  inputs-digest = "5ae00cb94174ee8972df2a2d31bb3ac3eed1e65405fcce65dd36d5b4ac251ba1"
   solver-name = "gps-cdcl"
   solver-version = 1
