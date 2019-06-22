@@ -7,7 +7,7 @@ func (m *ClientMock) SAdd(key string, members ...interface{}) *redis.IntCmd {
 		return m.client.SAdd(key, members...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, members).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) SCard(key string) *redis.IntCmd {
@@ -15,15 +15,15 @@ func (m *ClientMock) SCard(key string) *redis.IntCmd {
 		return m.client.SCard(key)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) SDiff(keys ...string) *redis.StringSliceCmd {
 	if !m.hasStub("SDiff") {
-		return m.client.SDiff()
+		return m.client.SDiff(keys...)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(keys).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) SDiffStore(destination string, keys ...string) *redis.IntCmd {
@@ -31,15 +31,15 @@ func (m *ClientMock) SDiffStore(destination string, keys ...string) *redis.IntCm
 		return m.client.SDiffStore(destination, keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(destination, keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) SInter(keys ...string) *redis.StringSliceCmd {
 	if !m.hasStub("SInter") {
-		return m.client.SInter()
+		return m.client.SInter(keys...)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(keys).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) SInterStore(destination string, keys ...string) *redis.IntCmd {
@@ -47,7 +47,7 @@ func (m *ClientMock) SInterStore(destination string, keys ...string) *redis.IntC
 		return m.client.SInterStore(destination, keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(destination, keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) SIsMember(key string, member interface{}) *redis.BoolCmd {
@@ -55,7 +55,7 @@ func (m *ClientMock) SIsMember(key string, member interface{}) *redis.BoolCmd {
 		return m.client.SIsMember(key, member)
 	}
 
-	return m.Called().Get(0).(*redis.BoolCmd)
+	return m.Called(key, member).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) SMembers(key string) *redis.StringSliceCmd {
@@ -63,7 +63,7 @@ func (m *ClientMock) SMembers(key string) *redis.StringSliceCmd {
 		return m.client.SMembers(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(key).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) SMembersMap(key string) *redis.StringStructMapCmd {
@@ -71,7 +71,7 @@ func (m *ClientMock) SMembersMap(key string) *redis.StringStructMapCmd {
 		return m.client.SMembersMap(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringStructMapCmd)
+	return m.Called(key).Get(0).(*redis.StringStructMapCmd)
 }
 
 func (m *ClientMock) SMove(source, destination string, member interface{}) *redis.BoolCmd {
@@ -79,7 +79,7 @@ func (m *ClientMock) SMove(source, destination string, member interface{}) *redi
 		return m.client.SMove(source, destination, member)
 	}
 
-	return m.Called().Get(0).(*redis.BoolCmd)
+	return m.Called(source, destination, member).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) SPop(key string) *redis.StringCmd {
@@ -87,7 +87,7 @@ func (m *ClientMock) SPop(key string) *redis.StringCmd {
 		return m.client.SPop(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(key).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) SPopN(key string, count int64) *redis.StringSliceCmd {
@@ -95,7 +95,7 @@ func (m *ClientMock) SPopN(key string, count int64) *redis.StringSliceCmd {
 		return m.client.SPopN(key, count)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(key, count).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) SRandMember(key string) *redis.StringCmd {
@@ -103,7 +103,7 @@ func (m *ClientMock) SRandMember(key string) *redis.StringCmd {
 		return m.client.SRandMember(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(key).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) SRandMemberN(key string, count int64) *redis.StringSliceCmd {
@@ -111,7 +111,7 @@ func (m *ClientMock) SRandMemberN(key string, count int64) *redis.StringSliceCmd
 		return m.client.SRandMemberN(key, count)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(key, count).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) SRem(key string, members ...interface{}) *redis.IntCmd {
@@ -119,7 +119,7 @@ func (m *ClientMock) SRem(key string, members ...interface{}) *redis.IntCmd {
 		return m.client.SRem(key, members...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, members).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) SUnion(keys ...string) *redis.StringSliceCmd {
@@ -127,7 +127,7 @@ func (m *ClientMock) SUnion(keys ...string) *redis.StringSliceCmd {
 		return m.client.SUnion(keys...)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(keys).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) SUnionStore(destination string, keys ...string) *redis.IntCmd {
@@ -135,5 +135,5 @@ func (m *ClientMock) SUnionStore(destination string, keys ...string) *redis.IntC
 		return m.client.SUnionStore(destination, keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(destination, keys).Get(0).(*redis.IntCmd)
 }

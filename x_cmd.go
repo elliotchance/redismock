@@ -7,7 +7,7 @@ func (m *ClientMock) XDel(stream string, ids ...string) *redis.IntCmd {
 		return m.client.XDel(stream, ids...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(stream, ids).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) XAdd(a *redis.XAddArgs) *redis.StringCmd {
@@ -15,7 +15,7 @@ func (m *ClientMock) XAdd(a *redis.XAddArgs) *redis.StringCmd {
 		return m.client.XAdd(a)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(a).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) XLen(stream string) *redis.IntCmd {
@@ -23,7 +23,7 @@ func (m *ClientMock) XLen(stream string) *redis.IntCmd {
 		return m.client.XLen(stream)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(stream).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) XRange(stream, start, stop string) *redis.XMessageSliceCmd {
@@ -31,7 +31,7 @@ func (m *ClientMock) XRange(stream, start, stop string) *redis.XMessageSliceCmd 
 		return m.client.XRange(stream, start, stop)
 	}
 
-	return m.Called().Get(0).(*redis.XMessageSliceCmd)
+	return m.Called(stream, start, stop).Get(0).(*redis.XMessageSliceCmd)
 }
 
 func (m *ClientMock) XRangeN(stream, start, stop string, count int64) *redis.XMessageSliceCmd {
@@ -39,7 +39,7 @@ func (m *ClientMock) XRangeN(stream, start, stop string, count int64) *redis.XMe
 		return m.client.XRangeN(stream, start, stop, count)
 	}
 
-	return m.Called().Get(0).(*redis.XMessageSliceCmd)
+	return m.Called(stream, start, stop, count).Get(0).(*redis.XMessageSliceCmd)
 }
 
 func (m *ClientMock) XRead(a *redis.XReadArgs) *redis.XStreamSliceCmd {
@@ -47,7 +47,7 @@ func (m *ClientMock) XRead(a *redis.XReadArgs) *redis.XStreamSliceCmd {
 		return m.client.XRead(a)
 	}
 
-	return m.Called().Get(0).(*redis.XStreamSliceCmd)
+	return m.Called(a).Get(0).(*redis.XStreamSliceCmd)
 }
 
 func (m *ClientMock) XRevRange(stream string, start, stop string) *redis.XMessageSliceCmd {
@@ -55,7 +55,7 @@ func (m *ClientMock) XRevRange(stream string, start, stop string) *redis.XMessag
 		return m.client.XRevRange(stream, start, stop)
 	}
 
-	return m.Called().Get(0).(*redis.XMessageSliceCmd)
+	return m.Called(stream, start, stop).Get(0).(*redis.XMessageSliceCmd)
 }
 
 func (m *ClientMock) XRevRangeN(stream string, start, stop string, count int64) *redis.XMessageSliceCmd {
@@ -63,7 +63,7 @@ func (m *ClientMock) XRevRangeN(stream string, start, stop string, count int64) 
 		return m.client.XRevRangeN(stream, start, stop, count)
 	}
 
-	return m.Called().Get(0).(*redis.XMessageSliceCmd)
+	return m.Called(stream, start, stop, count).Get(0).(*redis.XMessageSliceCmd)
 }
 
 func (m *ClientMock) XAck(stream, group string, ids ...string) *redis.IntCmd {
@@ -71,7 +71,7 @@ func (m *ClientMock) XAck(stream, group string, ids ...string) *redis.IntCmd {
 		return m.client.XAck(stream, group, ids...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(stream, group, ids).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) XClaim(a *redis.XClaimArgs) *redis.XMessageSliceCmd {
@@ -79,7 +79,7 @@ func (m *ClientMock) XClaim(a *redis.XClaimArgs) *redis.XMessageSliceCmd {
 		return m.client.XClaim(a)
 	}
 
-	return m.Called().Get(0).(*redis.XMessageSliceCmd)
+	return m.Called(a).Get(0).(*redis.XMessageSliceCmd)
 }
 
 func (m *ClientMock) XClaimJustID(a *redis.XClaimArgs) *redis.StringSliceCmd {
@@ -87,7 +87,7 @@ func (m *ClientMock) XClaimJustID(a *redis.XClaimArgs) *redis.StringSliceCmd {
 		return m.client.XClaimJustID(a)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(a).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) XGroupCreate(stream, group, start string) *redis.StatusCmd {
@@ -95,7 +95,7 @@ func (m *ClientMock) XGroupCreate(stream, group, start string) *redis.StatusCmd 
 		return m.client.XGroupCreate(stream, group, start)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(stream, group, start).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) XGroupDelConsumer(stream, group, consumer string) *redis.IntCmd {
@@ -103,7 +103,7 @@ func (m *ClientMock) XGroupDelConsumer(stream, group, consumer string) *redis.In
 		return m.client.XGroupDelConsumer(stream, group, consumer)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(stream, group, consumer).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) XGroupDestroy(stream, group string) *redis.IntCmd {
@@ -111,7 +111,7 @@ func (m *ClientMock) XGroupDestroy(stream, group string) *redis.IntCmd {
 		return m.client.XGroupDestroy(stream, group)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(stream, group).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) XGroupSetID(stream, group, start string) *redis.StatusCmd {
@@ -119,7 +119,7 @@ func (m *ClientMock) XGroupSetID(stream, group, start string) *redis.StatusCmd {
 		return m.client.XGroupSetID(stream, group, start)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(stream, group, start).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) XPending(stream, group string) *redis.XPendingCmd {
@@ -127,7 +127,7 @@ func (m *ClientMock) XPending(stream, group string) *redis.XPendingCmd {
 		return m.client.XPending(stream, group)
 	}
 
-	return m.Called().Get(0).(*redis.XPendingCmd)
+	return m.Called(stream, group).Get(0).(*redis.XPendingCmd)
 }
 
 func (m *ClientMock) XPendingExt(a *redis.XPendingExtArgs) *redis.XPendingExtCmd {
@@ -135,7 +135,7 @@ func (m *ClientMock) XPendingExt(a *redis.XPendingExtArgs) *redis.XPendingExtCmd
 		return m.client.XPendingExt(a)
 	}
 
-	return m.Called().Get(0).(*redis.XPendingExtCmd)
+	return m.Called(a).Get(0).(*redis.XPendingExtCmd)
 }
 
 func (m *ClientMock) XReadGroup(a *redis.XReadGroupArgs) *redis.XStreamSliceCmd {
@@ -143,7 +143,7 @@ func (m *ClientMock) XReadGroup(a *redis.XReadGroupArgs) *redis.XStreamSliceCmd 
 		return m.client.XReadGroup(a)
 	}
 
-	return m.Called().Get(0).(*redis.XStreamSliceCmd)
+	return m.Called(a).Get(0).(*redis.XStreamSliceCmd)
 }
 
 func (m *ClientMock) XReadStreams(streams ...string) *redis.XStreamSliceCmd {
@@ -151,7 +151,7 @@ func (m *ClientMock) XReadStreams(streams ...string) *redis.XStreamSliceCmd {
 		return m.client.XReadStreams(streams...)
 	}
 
-	return m.Called().Get(0).(*redis.XStreamSliceCmd)
+	return m.Called(streams).Get(0).(*redis.XStreamSliceCmd)
 }
 
 func (m *ClientMock) XTrim(key string, maxLen int64) *redis.IntCmd {
@@ -159,7 +159,7 @@ func (m *ClientMock) XTrim(key string, maxLen int64) *redis.IntCmd {
 		return m.client.XTrim(key, maxLen)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, maxLen).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) XTrimApprox(key string, maxLen int64) *redis.IntCmd {
@@ -167,7 +167,7 @@ func (m *ClientMock) XTrimApprox(key string, maxLen int64) *redis.IntCmd {
 		return m.client.XTrimApprox(key, maxLen)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, maxLen).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) XGroupCreateMkStream(stream, group, start string) *redis.StatusCmd {
@@ -175,5 +175,5 @@ func (m *ClientMock) XGroupCreateMkStream(stream, group, start string) *redis.St
 		return m.client.XGroupCreateMkStream(stream, group, start)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(stream, group, start).Get(0).(*redis.StatusCmd)
 }

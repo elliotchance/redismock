@@ -1,8 +1,9 @@
 package redismock
 
 import (
-	"github.com/go-redis/redis"
 	"time"
+
+	"github.com/go-redis/redis"
 )
 
 func (m *ClientMock) Pipeline() redis.Pipeliner {
@@ -78,7 +79,7 @@ func (m *ClientMock) Del(keys ...string) *redis.IntCmd {
 		return m.client.Del(keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) Unlink(keys ...string) *redis.IntCmd {
@@ -86,7 +87,7 @@ func (m *ClientMock) Unlink(keys ...string) *redis.IntCmd {
 		return m.client.Unlink(keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) Dump(key string) *redis.StringCmd {
@@ -94,7 +95,7 @@ func (m *ClientMock) Dump(key string) *redis.StringCmd {
 		return m.client.Dump(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(key).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) Exists(keys ...string) *redis.IntCmd {
@@ -102,7 +103,7 @@ func (m *ClientMock) Exists(keys ...string) *redis.IntCmd {
 		return m.client.Exists(keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) Expire(key string, expiration time.Duration) *redis.BoolCmd {
@@ -110,7 +111,7 @@ func (m *ClientMock) Expire(key string, expiration time.Duration) *redis.BoolCmd
 		return m.client.Expire(key, expiration)
 	}
 
-	return m.Called().Get(0).(*redis.BoolCmd)
+	return m.Called(key, expiration).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) ExpireAt(key string, tm time.Time) *redis.BoolCmd {
@@ -214,7 +215,7 @@ func (m *ClientMock) Rename(key, newkey string) *redis.StatusCmd {
 		return m.client.Rename(key, newkey)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(key, newkey).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) RenameNX(key, newkey string) *redis.BoolCmd {
@@ -222,7 +223,7 @@ func (m *ClientMock) RenameNX(key, newkey string) *redis.BoolCmd {
 		return m.client.RenameNX(key, newkey)
 	}
 
-	return m.Called().Get(0).(*redis.BoolCmd)
+	return m.Called(key, newkey).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) Restore(key string, ttl time.Duration, value string) *redis.StatusCmd {
@@ -230,7 +231,7 @@ func (m *ClientMock) Restore(key string, ttl time.Duration, value string) *redis
 		return m.client.Restore(key, ttl, value)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(key, ttl, value).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) RestoreReplace(key string, ttl time.Duration, value string) *redis.StatusCmd {
@@ -238,7 +239,7 @@ func (m *ClientMock) RestoreReplace(key string, ttl time.Duration, value string)
 		return m.client.RestoreReplace(key, ttl, value)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(key, ttl, value).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) Sort(key string, sort *redis.Sort) *redis.StringSliceCmd {
@@ -246,7 +247,7 @@ func (m *ClientMock) Sort(key string, sort *redis.Sort) *redis.StringSliceCmd {
 		return m.client.Sort(key, sort)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(key, sort).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) SortStore(key, store string, sort *redis.Sort) *redis.IntCmd {
@@ -254,7 +255,7 @@ func (m *ClientMock) SortStore(key, store string, sort *redis.Sort) *redis.IntCm
 		return m.client.SortStore(key, store, sort)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, store, sort).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) SortInterfaces(key string, sort *redis.Sort) *redis.SliceCmd {
@@ -262,15 +263,15 @@ func (m *ClientMock) SortInterfaces(key string, sort *redis.Sort) *redis.SliceCm
 		return m.client.SortInterfaces(key, sort)
 	}
 
-	return m.Called().Get(0).(*redis.SliceCmd)
+	return m.Called(key, sort).Get(0).(*redis.SliceCmd)
 }
 
 func (m *ClientMock) Touch(keys ...string) *redis.IntCmd {
 	if !m.hasStub("Touch") {
-		return m.client.Touch()
+		return m.client.Touch(keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) TTL(key string) *redis.DurationCmd {
@@ -278,7 +279,7 @@ func (m *ClientMock) TTL(key string) *redis.DurationCmd {
 		return m.client.TTL(key)
 	}
 
-	return m.Called().Get(0).(*redis.DurationCmd)
+	return m.Called(key).Get(0).(*redis.DurationCmd)
 }
 
 func (m *ClientMock) Type(key string) *redis.StatusCmd {
@@ -286,7 +287,7 @@ func (m *ClientMock) Type(key string) *redis.StatusCmd {
 		return m.client.Type(key)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(key).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) Scan(cursor uint64, match string, count int64) *redis.ScanCmd {
@@ -294,7 +295,7 @@ func (m *ClientMock) Scan(cursor uint64, match string, count int64) *redis.ScanC
 		return m.client.Scan(cursor, match, count)
 	}
 
-	return m.Called().Get(0).(*redis.ScanCmd)
+	return m.Called(cursor, match, count).Get(0).(*redis.ScanCmd)
 }
 
 func (m *ClientMock) SScan(key string, cursor uint64, match string, count int64) *redis.ScanCmd {
@@ -302,7 +303,7 @@ func (m *ClientMock) SScan(key string, cursor uint64, match string, count int64)
 		return m.client.SScan(key, cursor, match, count)
 	}
 
-	return m.Called().Get(0).(*redis.ScanCmd)
+	return m.Called(key, cursor, match, count).Get(0).(*redis.ScanCmd)
 }
 
 func (m *ClientMock) Append(key, value string) *redis.IntCmd {
@@ -310,7 +311,7 @@ func (m *ClientMock) Append(key, value string) *redis.IntCmd {
 		return m.client.Append(key, value)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, value).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) BitCount(key string, bitCount *redis.BitCount) *redis.IntCmd {
@@ -318,7 +319,7 @@ func (m *ClientMock) BitCount(key string, bitCount *redis.BitCount) *redis.IntCm
 		return m.client.BitCount(key, bitCount)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, bitCount).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) BitOpAnd(destKey string, keys ...string) *redis.IntCmd {
@@ -326,7 +327,7 @@ func (m *ClientMock) BitOpAnd(destKey string, keys ...string) *redis.IntCmd {
 		return m.client.BitOpAnd(destKey, keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(destKey, keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) BitOpOr(destKey string, keys ...string) *redis.IntCmd {
@@ -334,7 +335,7 @@ func (m *ClientMock) BitOpOr(destKey string, keys ...string) *redis.IntCmd {
 		return m.client.BitOpOr(destKey, keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(destKey, keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) BitOpXor(destKey string, keys ...string) *redis.IntCmd {
@@ -342,7 +343,7 @@ func (m *ClientMock) BitOpXor(destKey string, keys ...string) *redis.IntCmd {
 		return m.client.BitOpXor(destKey, keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(destKey, keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) BitOpNot(destKey string, key string) *redis.IntCmd {
@@ -350,7 +351,7 @@ func (m *ClientMock) BitOpNot(destKey string, key string) *redis.IntCmd {
 		return m.client.BitOpNot(destKey, key)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(destKey, key).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) BitPos(key string, bit int64, pos ...int64) *redis.IntCmd {
@@ -358,7 +359,7 @@ func (m *ClientMock) BitPos(key string, bit int64, pos ...int64) *redis.IntCmd {
 		return m.client.BitPos(key, bit, pos...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, bit, pos).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) Decr(key string) *redis.IntCmd {
@@ -374,7 +375,7 @@ func (m *ClientMock) DecrBy(key string, decrement int64) *redis.IntCmd {
 		return m.client.DecrBy(key, decrement)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, decrement).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) Get(key string) *redis.StringCmd {
@@ -382,7 +383,7 @@ func (m *ClientMock) Get(key string) *redis.StringCmd {
 		return m.client.Get(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(key).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) GetBit(key string, offset int64) *redis.IntCmd {
@@ -390,7 +391,7 @@ func (m *ClientMock) GetBit(key string, offset int64) *redis.IntCmd {
 		return m.client.GetBit(key, offset)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, offset).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) GetRange(key string, start, end int64) *redis.StringCmd {
@@ -398,7 +399,7 @@ func (m *ClientMock) GetRange(key string, start, end int64) *redis.StringCmd {
 		return m.client.GetRange(key, start, end)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(key, start, end).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) GetSet(key string, value interface{}) *redis.StringCmd {
@@ -406,7 +407,7 @@ func (m *ClientMock) GetSet(key string, value interface{}) *redis.StringCmd {
 		return m.client.GetSet(key, value)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(key, value).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) Incr(key string) *redis.IntCmd {
@@ -414,7 +415,7 @@ func (m *ClientMock) Incr(key string) *redis.IntCmd {
 		return m.client.Incr(key)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) IncrBy(key string, value int64) *redis.IntCmd {
@@ -422,7 +423,7 @@ func (m *ClientMock) IncrBy(key string, value int64) *redis.IntCmd {
 		return m.client.IncrBy(key, value)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, value).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) IncrByFloat(key string, value float64) *redis.FloatCmd {
@@ -430,31 +431,31 @@ func (m *ClientMock) IncrByFloat(key string, value float64) *redis.FloatCmd {
 		return m.client.IncrByFloat(key, value)
 	}
 
-	return m.Called().Get(0).(*redis.FloatCmd)
+	return m.Called(key, value).Get(0).(*redis.FloatCmd)
 }
 
 func (m *ClientMock) MGet(keys ...string) *redis.SliceCmd {
 	if !m.hasStub("MGet") {
-		return m.client.MGet()
+		return m.client.MGet(keys...)
 	}
 
-	return m.Called().Get(0).(*redis.SliceCmd)
+	return m.Called(keys).Get(0).(*redis.SliceCmd)
 }
 
 func (m *ClientMock) MSet(pairs ...interface{}) *redis.StatusCmd {
 	if !m.hasStub("MSet") {
-		return m.client.MSet()
+		return m.client.MSet(pairs...)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(pairs).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) MSetNX(pairs ...interface{}) *redis.BoolCmd {
 	if !m.hasStub("MSetNX") {
-		return m.client.MSetNX()
+		return m.client.MSetNX(pairs...)
 	}
 
-	return m.Called().Get(0).(*redis.BoolCmd)
+	return m.Called(pairs).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) Set(key string, value interface{}, expiration time.Duration) *redis.StatusCmd {
@@ -462,7 +463,7 @@ func (m *ClientMock) Set(key string, value interface{}, expiration time.Duration
 		return m.client.Set(key, value, expiration)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(key, value, expiration).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) SetBit(key string, offset int64, value int) *redis.IntCmd {
@@ -470,7 +471,7 @@ func (m *ClientMock) SetBit(key string, offset int64, value int) *redis.IntCmd {
 		return m.client.SetBit(key, offset, value)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, offset, value).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) SetNX(key string, value interface{}, expiration time.Duration) *redis.BoolCmd {
@@ -478,7 +479,7 @@ func (m *ClientMock) SetNX(key string, value interface{}, expiration time.Durati
 		return m.client.SetNX(key, value, expiration)
 	}
 
-	return m.Called().Get(0).(*redis.BoolCmd)
+	return m.Called(key, value, expiration).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) SetXX(key string, value interface{}, expiration time.Duration) *redis.BoolCmd {
@@ -486,7 +487,7 @@ func (m *ClientMock) SetXX(key string, value interface{}, expiration time.Durati
 		return m.client.SetXX(key, value, expiration)
 	}
 
-	return m.Called().Get(0).(*redis.BoolCmd)
+	return m.Called(key, value, expiration).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) SetRange(key string, offset int64, value string) *redis.IntCmd {
@@ -494,7 +495,7 @@ func (m *ClientMock) SetRange(key string, offset int64, value string) *redis.Int
 		return m.client.SetRange(key, offset, value)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, offset, value).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) StrLen(key string) *redis.IntCmd {
@@ -502,7 +503,7 @@ func (m *ClientMock) StrLen(key string) *redis.IntCmd {
 		return m.client.StrLen(key)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) BLPop(timeout time.Duration, keys ...string) *redis.StringSliceCmd {
@@ -510,7 +511,7 @@ func (m *ClientMock) BLPop(timeout time.Duration, keys ...string) *redis.StringS
 		return m.client.BLPop(timeout, keys...)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(timeout, keys).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) BRPop(timeout time.Duration, keys ...string) *redis.StringSliceCmd {
@@ -518,7 +519,7 @@ func (m *ClientMock) BRPop(timeout time.Duration, keys ...string) *redis.StringS
 		return m.client.BRPop(timeout, keys...)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(timeout, keys).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) BRPopLPush(source, destination string, timeout time.Duration) *redis.StringCmd {
@@ -526,7 +527,7 @@ func (m *ClientMock) BRPopLPush(source, destination string, timeout time.Duratio
 		return m.client.BRPopLPush(source, destination, timeout)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(source, destination, timeout).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) LIndex(key string, index int64) *redis.StringCmd {
@@ -534,7 +535,7 @@ func (m *ClientMock) LIndex(key string, index int64) *redis.StringCmd {
 		return m.client.LIndex(key, index)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(key, index).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) LInsert(key, op string, pivot, value interface{}) *redis.IntCmd {
@@ -542,7 +543,7 @@ func (m *ClientMock) LInsert(key, op string, pivot, value interface{}) *redis.In
 		return m.client.LInsert(key, op, pivot, value)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, op, pivot, value).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) LInsertBefore(key string, pivot, value interface{}) *redis.IntCmd {
@@ -550,7 +551,7 @@ func (m *ClientMock) LInsertBefore(key string, pivot, value interface{}) *redis.
 		return m.client.LInsertBefore(key, pivot, value)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, pivot, value).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) LInsertAfter(key string, pivot, value interface{}) *redis.IntCmd {
@@ -558,7 +559,7 @@ func (m *ClientMock) LInsertAfter(key string, pivot, value interface{}) *redis.I
 		return m.client.LInsertAfter(key, pivot, value)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, pivot, value).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) LLen(key string) *redis.IntCmd {
@@ -566,7 +567,7 @@ func (m *ClientMock) LLen(key string) *redis.IntCmd {
 		return m.client.LLen(key)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) LPop(key string) *redis.StringCmd {
@@ -574,7 +575,7 @@ func (m *ClientMock) LPop(key string) *redis.StringCmd {
 		return m.client.LPop(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(key).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) LPush(key string, values ...interface{}) *redis.IntCmd {
@@ -582,7 +583,7 @@ func (m *ClientMock) LPush(key string, values ...interface{}) *redis.IntCmd {
 		return m.client.LPush(key, values...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, values).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) LPushX(key string, value interface{}) *redis.IntCmd {
@@ -590,7 +591,7 @@ func (m *ClientMock) LPushX(key string, value interface{}) *redis.IntCmd {
 		return m.client.LPushX(key, value)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, value).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) LRange(key string, start, stop int64) *redis.StringSliceCmd {
@@ -598,7 +599,7 @@ func (m *ClientMock) LRange(key string, start, stop int64) *redis.StringSliceCmd
 		return m.client.LRange(key, start, stop)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(key, start, stop).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) LRem(key string, count int64, value interface{}) *redis.IntCmd {
@@ -606,7 +607,7 @@ func (m *ClientMock) LRem(key string, count int64, value interface{}) *redis.Int
 		return m.client.LRem(key, count, value)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, count, value).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) LSet(key string, index int64, value interface{}) *redis.StatusCmd {
@@ -614,7 +615,7 @@ func (m *ClientMock) LSet(key string, index int64, value interface{}) *redis.Sta
 		return m.client.LSet(key, index, value)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(key, index, value).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) LTrim(key string, start, stop int64) *redis.StatusCmd {
@@ -622,7 +623,7 @@ func (m *ClientMock) LTrim(key string, start, stop int64) *redis.StatusCmd {
 		return m.client.LTrim(key, start, stop)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(key, start, stop).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) RPop(key string) *redis.StringCmd {
@@ -630,7 +631,7 @@ func (m *ClientMock) RPop(key string) *redis.StringCmd {
 		return m.client.RPop(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(key).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) RPopLPush(source, destination string) *redis.StringCmd {
@@ -638,7 +639,7 @@ func (m *ClientMock) RPopLPush(source, destination string) *redis.StringCmd {
 		return m.client.RPopLPush(source, destination)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(source, destination).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) RPush(key string, values ...interface{}) *redis.IntCmd {
@@ -646,7 +647,7 @@ func (m *ClientMock) RPush(key string, values ...interface{}) *redis.IntCmd {
 		return m.client.RPush(key, values...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, values).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) RPushX(key string, value interface{}) *redis.IntCmd {
@@ -654,7 +655,7 @@ func (m *ClientMock) RPushX(key string, value interface{}) *redis.IntCmd {
 		return m.client.RPushX(key, value)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, value).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) PFAdd(key string, els ...interface{}) *redis.IntCmd {
@@ -662,15 +663,15 @@ func (m *ClientMock) PFAdd(key string, els ...interface{}) *redis.IntCmd {
 		return m.client.PFAdd(key, els...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, els).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) PFCount(keys ...string) *redis.IntCmd {
 	if !m.hasStub("PFCount") {
-		return m.client.PFCount()
+		return m.client.PFCount(keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) PFMerge(dest string, keys ...string) *redis.StatusCmd {
@@ -678,7 +679,7 @@ func (m *ClientMock) PFMerge(dest string, keys ...string) *redis.StatusCmd {
 		return m.client.PFMerge(dest, keys...)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(dest, keys).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) BgRewriteAOF() *redis.StatusCmd {
@@ -702,7 +703,7 @@ func (m *ClientMock) ClientKill(ipPort string) *redis.StatusCmd {
 		return m.client.ClientKill(ipPort)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(ipPort).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) ClientList() *redis.StringCmd {
@@ -718,7 +719,7 @@ func (m *ClientMock) ClientPause(dur time.Duration) *redis.BoolCmd {
 		return m.client.ClientPause(dur)
 	}
 
-	return m.Called().Get(0).(*redis.BoolCmd)
+	return m.Called(dur).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) ConfigGet(parameter string) *redis.SliceCmd {
@@ -726,7 +727,7 @@ func (m *ClientMock) ConfigGet(parameter string) *redis.SliceCmd {
 		return m.client.ConfigGet(parameter)
 	}
 
-	return m.Called().Get(0).(*redis.SliceCmd)
+	return m.Called(parameter).Get(0).(*redis.SliceCmd)
 }
 
 func (m *ClientMock) ConfigResetStat() *redis.StatusCmd {
@@ -742,7 +743,7 @@ func (m *ClientMock) ConfigSet(parameter, value string) *redis.StatusCmd {
 		return m.client.ConfigSet(parameter, value)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(parameter, value).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) ConfigRewrite() *redis.StatusCmd {
@@ -795,10 +796,10 @@ func (m *ClientMock) FlushDBAsync() *redis.StatusCmd {
 
 func (m *ClientMock) Info(section ...string) *redis.StringCmd {
 	if !m.hasStub("Info") {
-		return m.client.Info()
+		return m.client.Info(section...)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(section).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) LastSave() *redis.IntCmd {
@@ -846,7 +847,7 @@ func (m *ClientMock) SlaveOf(host, port string) *redis.StatusCmd {
 		return m.client.SlaveOf(host, port)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(host, port).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) Time() *redis.TimeCmd {
@@ -862,7 +863,7 @@ func (m *ClientMock) Eval(script string, keys []string, args ...interface{}) *re
 		return m.client.Eval(script, keys, args...)
 	}
 
-	return m.Called().Get(0).(*redis.Cmd)
+	return m.Called(script, keys, args).Get(0).(*redis.Cmd)
 }
 
 func (m *ClientMock) EvalSha(sha1 string, keys []string, args ...interface{}) *redis.Cmd {
@@ -870,15 +871,15 @@ func (m *ClientMock) EvalSha(sha1 string, keys []string, args ...interface{}) *r
 		return m.client.EvalSha(sha1, keys, args...)
 	}
 
-	return m.Called().Get(0).(*redis.Cmd)
+	return m.Called(sha1, keys, args).Get(0).(*redis.Cmd)
 }
 
 func (m *ClientMock) ScriptExists(hashes ...string) *redis.BoolSliceCmd {
 	if !m.hasStub("ScriptExists") {
-		return m.client.ScriptExists()
+		return m.client.ScriptExists(hashes...)
 	}
 
-	return m.Called().Get(0).(*redis.BoolSliceCmd)
+	return m.Called(hashes).Get(0).(*redis.BoolSliceCmd)
 }
 
 func (m *ClientMock) ScriptFlush() *redis.StatusCmd {
@@ -902,7 +903,7 @@ func (m *ClientMock) ScriptLoad(script string) *redis.StringCmd {
 		return m.client.ScriptLoad(script)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(script).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) DebugObject(key string) *redis.StringCmd {
@@ -910,7 +911,7 @@ func (m *ClientMock) DebugObject(key string) *redis.StringCmd {
 		return m.client.DebugObject(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(key).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) Publish(channel string, message interface{}) *redis.IntCmd {
@@ -918,7 +919,7 @@ func (m *ClientMock) Publish(channel string, message interface{}) *redis.IntCmd 
 		return m.client.Publish(channel, message)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(channel, message).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) PubSubChannels(pattern string) *redis.StringSliceCmd {
@@ -926,15 +927,15 @@ func (m *ClientMock) PubSubChannels(pattern string) *redis.StringSliceCmd {
 		return m.client.PubSubChannels(pattern)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(pattern).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) PubSubNumSub(channels ...string) *redis.StringIntMapCmd {
 	if !m.hasStub("PubSubNumSub") {
-		return m.client.PubSubNumSub()
+		return m.client.PubSubNumSub(channels...)
 	}
 
-	return m.Called().Get(0).(*redis.StringIntMapCmd)
+	return m.Called(channels).Get(0).(*redis.StringIntMapCmd)
 }
 
 func (m *ClientMock) PubSubNumPat() *redis.IntCmd {
@@ -966,7 +967,7 @@ func (m *ClientMock) ClusterMeet(host, port string) *redis.StatusCmd {
 		return m.client.ClusterMeet(host, port)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(host, port).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) ClusterForget(nodeID string) *redis.StatusCmd {
@@ -974,7 +975,7 @@ func (m *ClientMock) ClusterForget(nodeID string) *redis.StatusCmd {
 		return m.client.ClusterForget(nodeID)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(nodeID).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) ClusterReplicate(nodeID string) *redis.StatusCmd {
@@ -982,7 +983,7 @@ func (m *ClientMock) ClusterReplicate(nodeID string) *redis.StatusCmd {
 		return m.client.ClusterReplicate(nodeID)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(nodeID).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) ClusterResetSoft() *redis.StatusCmd {
@@ -1014,7 +1015,7 @@ func (m *ClientMock) ClusterKeySlot(key string) *redis.IntCmd {
 		return m.client.ClusterKeySlot(key)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) ClusterGetKeysInSlot(slot int, count int) *redis.StringSliceCmd {
@@ -1022,7 +1023,7 @@ func (m *ClientMock) ClusterGetKeysInSlot(slot int, count int) *redis.StringSlic
 		return m.client.ClusterGetKeysInSlot(slot, count)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(slot, count).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) ClusterCountFailureReports(nodeID string) *redis.IntCmd {
@@ -1030,7 +1031,7 @@ func (m *ClientMock) ClusterCountFailureReports(nodeID string) *redis.IntCmd {
 		return m.client.ClusterCountFailureReports(nodeID)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(nodeID).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) ClusterCountKeysInSlot(slot int) *redis.IntCmd {
@@ -1038,7 +1039,7 @@ func (m *ClientMock) ClusterCountKeysInSlot(slot int) *redis.IntCmd {
 		return m.client.ClusterCountKeysInSlot(slot)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(slot).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) ClusterDelSlots(slots ...int) *redis.StatusCmd {
@@ -1046,7 +1047,7 @@ func (m *ClientMock) ClusterDelSlots(slots ...int) *redis.StatusCmd {
 		return m.client.ClusterDelSlots(slots...)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(slots).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) ClusterDelSlotsRange(min, max int) *redis.StatusCmd {
@@ -1054,7 +1055,7 @@ func (m *ClientMock) ClusterDelSlotsRange(min, max int) *redis.StatusCmd {
 		return m.client.ClusterDelSlotsRange(min, max)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(min, max).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) ClusterSaveConfig() *redis.StatusCmd {
@@ -1070,7 +1071,7 @@ func (m *ClientMock) ClusterSlaves(nodeID string) *redis.StringSliceCmd {
 		return m.client.ClusterSlaves(nodeID)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(nodeID).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) ClusterFailover() *redis.StatusCmd {
@@ -1083,10 +1084,10 @@ func (m *ClientMock) ClusterFailover() *redis.StatusCmd {
 
 func (m *ClientMock) ClusterAddSlots(slots ...int) *redis.StatusCmd {
 	if !m.hasStub("ClusterAddSlots") {
-		return m.client.ClusterAddSlots()
+		return m.client.ClusterAddSlots(slots...)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(slots).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) ClusterAddSlotsRange(min, max int) *redis.StatusCmd {
@@ -1094,7 +1095,7 @@ func (m *ClientMock) ClusterAddSlotsRange(min, max int) *redis.StatusCmd {
 		return m.client.ClusterAddSlotsRange(min, max)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(min, max).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) GeoAdd(key string, geoLocation ...*redis.GeoLocation) *redis.IntCmd {
@@ -1102,7 +1103,7 @@ func (m *ClientMock) GeoAdd(key string, geoLocation ...*redis.GeoLocation) *redi
 		return m.client.GeoAdd(key, geoLocation...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, geoLocation).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) GeoPos(key string, members ...string) *redis.GeoPosCmd {
@@ -1110,7 +1111,7 @@ func (m *ClientMock) GeoPos(key string, members ...string) *redis.GeoPosCmd {
 		return m.client.GeoPos(key, members...)
 	}
 
-	return m.Called().Get(0).(*redis.GeoPosCmd)
+	return m.Called(key, members).Get(0).(*redis.GeoPosCmd)
 }
 
 func (m *ClientMock) GeoRadius(key string, longitude, latitude float64, query *redis.GeoRadiusQuery) *redis.GeoLocationCmd {
@@ -1118,7 +1119,7 @@ func (m *ClientMock) GeoRadius(key string, longitude, latitude float64, query *r
 		return m.client.GeoRadius(key, longitude, latitude, query)
 	}
 
-	return m.Called().Get(0).(*redis.GeoLocationCmd)
+	return m.Called(key, longitude, latitude, query).Get(0).(*redis.GeoLocationCmd)
 }
 
 func (m *ClientMock) GeoRadiusRO(key string, longitude, latitude float64, query *redis.GeoRadiusQuery) *redis.GeoLocationCmd {
@@ -1126,7 +1127,7 @@ func (m *ClientMock) GeoRadiusRO(key string, longitude, latitude float64, query 
 		return m.client.GeoRadiusRO(key, longitude, latitude, query)
 	}
 
-	return m.Called().Get(0).(*redis.GeoLocationCmd)
+	return m.Called(key, longitude, latitude, query).Get(0).(*redis.GeoLocationCmd)
 }
 
 func (m *ClientMock) GeoRadiusByMember(key, member string, query *redis.GeoRadiusQuery) *redis.GeoLocationCmd {
@@ -1134,7 +1135,7 @@ func (m *ClientMock) GeoRadiusByMember(key, member string, query *redis.GeoRadiu
 		return m.client.GeoRadiusByMember(key, member, query)
 	}
 
-	return m.Called().Get(0).(*redis.GeoLocationCmd)
+	return m.Called(key, member, query).Get(0).(*redis.GeoLocationCmd)
 }
 
 func (m *ClientMock) GeoRadiusByMemberRO(key, member string, query *redis.GeoRadiusQuery) *redis.GeoLocationCmd {
@@ -1142,7 +1143,7 @@ func (m *ClientMock) GeoRadiusByMemberRO(key, member string, query *redis.GeoRad
 		return m.client.GeoRadiusByMemberRO(key, member, query)
 	}
 
-	return m.Called().Get(0).(*redis.GeoLocationCmd)
+	return m.Called(key, member, query).Get(0).(*redis.GeoLocationCmd)
 }
 
 func (m *ClientMock) GeoDist(key string, member1, member2, unit string) *redis.FloatCmd {
@@ -1150,7 +1151,7 @@ func (m *ClientMock) GeoDist(key string, member1, member2, unit string) *redis.F
 		return m.client.GeoDist(key, member1, member2, unit)
 	}
 
-	return m.Called().Get(0).(*redis.FloatCmd)
+	return m.Called(key, member1, member2, unit).Get(0).(*redis.FloatCmd)
 }
 
 func (m *ClientMock) GeoHash(key string, members ...string) *redis.StringSliceCmd {
@@ -1158,7 +1159,7 @@ func (m *ClientMock) GeoHash(key string, members ...string) *redis.StringSliceCm
 		return m.client.GeoHash(key, members...)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(key, members).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) Command() *redis.CommandsInfoCmd {
@@ -1174,7 +1175,7 @@ func (m *ClientMock) ClientKillByFilter(keys ...string) *redis.IntCmd {
 		return m.client.ClientKillByFilter(keys...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) MemoryUsage(key string, samples ...int) *redis.IntCmd {
@@ -1182,7 +1183,7 @@ func (m *ClientMock) MemoryUsage(key string, samples ...int) *redis.IntCmd {
 		return m.client.MemoryUsage(key, samples...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, samples).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) ReadOnly() *redis.StatusCmd {

@@ -7,7 +7,7 @@ func (m *ClientMock) HDel(key string, fields ...string) *redis.IntCmd {
 		return m.client.HDel(key, fields...)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, fields).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) HExists(key, field string) *redis.BoolCmd {
@@ -15,7 +15,7 @@ func (m *ClientMock) HExists(key, field string) *redis.BoolCmd {
 		return m.client.HExists(key, field)
 	}
 
-	return m.Called().Get(0).(*redis.BoolCmd)
+	return m.Called(key, field).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) HGet(key, field string) *redis.StringCmd {
@@ -23,7 +23,7 @@ func (m *ClientMock) HGet(key, field string) *redis.StringCmd {
 		return m.client.HGet(key, field)
 	}
 
-	return m.Called().Get(0).(*redis.StringCmd)
+	return m.Called(key, field).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) HGetAll(key string) *redis.StringStringMapCmd {
@@ -31,7 +31,7 @@ func (m *ClientMock) HGetAll(key string) *redis.StringStringMapCmd {
 		return m.client.HGetAll(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringStringMapCmd)
+	return m.Called(key).Get(0).(*redis.StringStringMapCmd)
 }
 
 func (m *ClientMock) HIncrBy(key, field string, incr int64) *redis.IntCmd {
@@ -39,7 +39,7 @@ func (m *ClientMock) HIncrBy(key, field string, incr int64) *redis.IntCmd {
 		return m.client.HIncrBy(key, field, incr)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key, field, incr).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) HIncrByFloat(key, field string, incr float64) *redis.FloatCmd {
@@ -47,7 +47,7 @@ func (m *ClientMock) HIncrByFloat(key, field string, incr float64) *redis.FloatC
 		return m.client.HIncrByFloat(key, field, incr)
 	}
 
-	return m.Called().Get(0).(*redis.FloatCmd)
+	return m.Called(key, field, incr).Get(0).(*redis.FloatCmd)
 }
 
 func (m *ClientMock) HKeys(key string) *redis.StringSliceCmd {
@@ -55,7 +55,7 @@ func (m *ClientMock) HKeys(key string) *redis.StringSliceCmd {
 		return m.client.HKeys(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(key).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) HLen(key string) *redis.IntCmd {
@@ -63,7 +63,7 @@ func (m *ClientMock) HLen(key string) *redis.IntCmd {
 		return m.client.HLen(key)
 	}
 
-	return m.Called().Get(0).(*redis.IntCmd)
+	return m.Called(key).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) HMGet(key string, fields ...string) *redis.SliceCmd {
@@ -71,7 +71,7 @@ func (m *ClientMock) HMGet(key string, fields ...string) *redis.SliceCmd {
 		return m.client.HMGet(key, fields...)
 	}
 
-	return m.Called().Get(0).(*redis.SliceCmd)
+	return m.Called(key, fields).Get(0).(*redis.SliceCmd)
 }
 
 func (m *ClientMock) HMSet(key string, fields map[string]interface{}) *redis.StatusCmd {
@@ -79,7 +79,7 @@ func (m *ClientMock) HMSet(key string, fields map[string]interface{}) *redis.Sta
 		return m.client.HMSet(key, fields)
 	}
 
-	return m.Called().Get(0).(*redis.StatusCmd)
+	return m.Called(key, fields).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) HSet(key, field string, value interface{}) *redis.BoolCmd {
@@ -87,7 +87,7 @@ func (m *ClientMock) HSet(key, field string, value interface{}) *redis.BoolCmd {
 		return m.client.HSet(key, field, value)
 	}
 
-	return m.Called().Get(0).(*redis.BoolCmd)
+	return m.Called(key, field, value).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) HSetNX(key, field string, value interface{}) *redis.BoolCmd {
@@ -95,7 +95,7 @@ func (m *ClientMock) HSetNX(key, field string, value interface{}) *redis.BoolCmd
 		return m.client.HSetNX(key, field, value)
 	}
 
-	return m.Called().Get(0).(*redis.BoolCmd)
+	return m.Called(key, field, value).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) HVals(key string) *redis.StringSliceCmd {
@@ -103,7 +103,7 @@ func (m *ClientMock) HVals(key string) *redis.StringSliceCmd {
 		return m.client.HVals(key)
 	}
 
-	return m.Called().Get(0).(*redis.StringSliceCmd)
+	return m.Called(key).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) HScan(key string, cursor uint64, match string, count int64) *redis.ScanCmd {
@@ -111,5 +111,5 @@ func (m *ClientMock) HScan(key string, cursor uint64, match string, count int64)
 		return m.client.HScan(key, cursor, match, count)
 	}
 
-	return m.Called().Get(0).(*redis.ScanCmd)
+	return m.Called(key, cursor, match, count).Get(0).(*redis.ScanCmd)
 }
