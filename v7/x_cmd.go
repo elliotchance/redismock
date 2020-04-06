@@ -177,3 +177,11 @@ func (m *ClientMock) XGroupCreateMkStream(stream, group, start string) *redis.St
 
 	return m.Called(stream, group, start).Get(0).(*redis.StatusCmd)
 }
+
+func (m *ClientMock) XInfoGroups(key string) *redis.XInfoGroupsCmd {
+	if !m.hasStub("XInfoGroups") {
+		return m.client.XInfoGroups(key)
+	}
+
+	return m.Called(key).Get(0).(*redis.XInfoGroupsCmd)
+}

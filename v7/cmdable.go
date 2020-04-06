@@ -586,7 +586,7 @@ func (m *ClientMock) LPush(key string, values ...interface{}) *redis.IntCmd {
 	return m.Called(key, values).Get(0).(*redis.IntCmd)
 }
 
-func (m *ClientMock) LPushX(key string, value interface{}) *redis.IntCmd {
+func (m *ClientMock) LPushX(key string, value ...interface{}) *redis.IntCmd {
 	if !m.hasStub("LPushX") {
 		return m.client.LPushX(key, value)
 	}
@@ -650,7 +650,7 @@ func (m *ClientMock) RPush(key string, values ...interface{}) *redis.IntCmd {
 	return m.Called(key, values).Get(0).(*redis.IntCmd)
 }
 
-func (m *ClientMock) RPushX(key string, value interface{}) *redis.IntCmd {
+func (m *ClientMock) RPushX(key string, value ...interface{}) *redis.IntCmd {
 	if !m.hasStub("RPushX") {
 		return m.client.RPushX(key, value)
 	}
@@ -1122,12 +1122,28 @@ func (m *ClientMock) GeoRadius(key string, longitude, latitude float64, query *r
 	return m.Called(key, longitude, latitude, query).Get(0).(*redis.GeoLocationCmd)
 }
 
+func (m *ClientMock) GeoRadiusStore(key string, longitude, latitude float64, query *redis.GeoRadiusQuery) *redis.IntCmd {
+	if !m.hasStub("GeoRadius") {
+		return m.client.GeoRadiusStore(key, longitude, latitude, query)
+	}
+
+	return m.Called(key, longitude, latitude, query).Get(0).(*redis.IntCmd)
+}
+
 func (m *ClientMock) GeoRadiusByMember(key, member string, query *redis.GeoRadiusQuery) *redis.GeoLocationCmd {
 	if !m.hasStub("GeoRadiusByMember") {
 		return m.client.GeoRadiusByMember(key, member, query)
 	}
 
 	return m.Called(key, member, query).Get(0).(*redis.GeoLocationCmd)
+}
+
+func (m *ClientMock) GeoRadiusByMemberStore(key, member string, query *redis.GeoRadiusQuery) *redis.IntCmd {
+	if !m.hasStub("GeoRadiusByMember") {
+		return m.client.GeoRadiusByMemberStore(key, member, query)
+	}
+
+	return m.Called(key, member, query).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) GeoDist(key string, member1, member2, unit string) *redis.FloatCmd {
@@ -1192,4 +1208,12 @@ func (m *ClientMock) ClientID() *redis.IntCmd {
 	}
 
 	return m.Called().Get(0).(*redis.IntCmd)
+}
+
+func (m *ClientMock) BitField(key string, args ...interface{}) *redis.IntSliceCmd {
+	if !m.hasStub("BitField") {
+		return m.client.BitField(key, args...)
+	}
+
+	return m.Called(key, args).Get(0).(*redis.IntSliceCmd)
 }

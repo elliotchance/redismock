@@ -74,7 +74,7 @@ func (m *ClientMock) HMGet(key string, fields ...string) *redis.SliceCmd {
 	return m.Called(key, fields).Get(0).(*redis.SliceCmd)
 }
 
-func (m *ClientMock) HMSet(key string, fields map[string]interface{}) *redis.BoolCmd {
+func (m *ClientMock) HMSet(key string, fields ...interface{}) *redis.BoolCmd {
 	if !m.hasStub("HMSet") {
 		return m.client.HMSet(key, fields)
 	}
@@ -82,12 +82,12 @@ func (m *ClientMock) HMSet(key string, fields map[string]interface{}) *redis.Boo
 	return m.Called(key, fields).Get(0).(*redis.BoolCmd)
 }
 
-func (m *ClientMock) HSet(key, field string, value interface{}) *redis.IntCmd {
+func (m *ClientMock) HSet(key string, values ...interface{}) *redis.IntCmd {
 	if !m.hasStub("HSet") {
-		return m.client.HSet(key, field, value)
+		return m.client.HSet(key, values)
 	}
 
-	return m.Called(key, field, value).Get(0).(*redis.IntCmd)
+	return m.Called(key, values).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) HSetNX(key, field string, value interface{}) *redis.BoolCmd {
