@@ -1,6 +1,6 @@
 package redismock
 
-import "github.com/go-redis/redis"
+import "github.com/go-redis/redis/v7"
 
 func (m *ClientMock) SAdd(key string, members ...interface{}) *redis.IntCmd {
 	if !m.hasStub("SAdd") {

@@ -6,13 +6,21 @@
 package redismock
 
 import (
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v7"
 	"github.com/stretchr/testify/mock"
 )
 
 type ClientMock struct {
 	mock.Mock
 	client *redis.Client
+}
+
+func (m *ClientMock) BitField(key string, args ...interface{}) *redis.IntSliceCmd {
+	panic("implement me") //TODO
+}
+
+func (m *ClientMock) XInfoGroups(key string) *redis.XInfoGroupsCmd {
+	panic("implement me") //TODO
 }
 
 // NewMock creates a hollow mock. You will need to stub all commands that you

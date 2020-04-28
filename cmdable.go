@@ -3,7 +3,7 @@ package redismock
 import (
 	"time"
 
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v7"
 )
 
 func (m *ClientMock) Pipeline() redis.Pipeliner {
@@ -130,7 +130,7 @@ func (m *ClientMock) Keys(pattern string) *redis.StringSliceCmd {
 	return m.Called().Get(0).(*redis.StringSliceCmd)
 }
 
-func (m *ClientMock) Migrate(host, port, key string, db int64, timeout time.Duration) *redis.StatusCmd {
+func (m *ClientMock) Migrate(host, port, key string, db int, timeout time.Duration) *redis.StatusCmd {
 	if !m.hasStub("Migrate") {
 		return m.client.Migrate(host, port, key, db, timeout)
 	}
@@ -138,7 +138,7 @@ func (m *ClientMock) Migrate(host, port, key string, db int64, timeout time.Dura
 	return m.Called().Get(0).(*redis.StatusCmd)
 }
 
-func (m *ClientMock) Move(key string, db int64) *redis.BoolCmd {
+func (m *ClientMock) Move(key string, db int) *redis.BoolCmd {
 	if !m.hasStub("Move") {
 		return m.client.Move(key, db)
 	}
@@ -586,12 +586,12 @@ func (m *ClientMock) LPush(key string, values ...interface{}) *redis.IntCmd {
 	return m.Called(key, values).Get(0).(*redis.IntCmd)
 }
 
-func (m *ClientMock) LPushX(key string, value interface{}) *redis.IntCmd {
+func (m *ClientMock) LPushX(key string, values ...interface{}) *redis.IntCmd {
 	if !m.hasStub("LPushX") {
-		return m.client.LPushX(key, value)
+		return m.client.LPushX(key, values)
 	}
 
-	return m.Called(key, value).Get(0).(*redis.IntCmd)
+	return m.Called(key, values).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) LRange(key string, start, stop int64) *redis.StringSliceCmd {
@@ -650,12 +650,12 @@ func (m *ClientMock) RPush(key string, values ...interface{}) *redis.IntCmd {
 	return m.Called(key, values).Get(0).(*redis.IntCmd)
 }
 
-func (m *ClientMock) RPushX(key string, value interface{}) *redis.IntCmd {
+func (m *ClientMock) RPushX(key string, values ...interface{}) *redis.IntCmd {
 	if !m.hasStub("RPushX") {
-		return m.client.RPushX(key, value)
+		return m.client.RPushX(key, values)
 	}
 
-	return m.Called(key, value).Get(0).(*redis.IntCmd)
+	return m.Called(key, values).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) PFAdd(key string, els ...interface{}) *redis.IntCmd {
@@ -1122,12 +1122,16 @@ func (m *ClientMock) GeoRadius(key string, longitude, latitude float64, query *r
 	return m.Called(key, longitude, latitude, query).Get(0).(*redis.GeoLocationCmd)
 }
 
-func (m *ClientMock) GeoRadiusRO(key string, longitude, latitude float64, query *redis.GeoRadiusQuery) *redis.GeoLocationCmd {
+/*func (m *ClientMock) GeoRadiusRO(key string, longitude, latitude float64, query *redis.GeoRadiusQuery) *redis.GeoLocationCmd {
 	if !m.hasStub("GeoRadiusRO") {
 		return m.client.GeoRadiusRO(key, longitude, latitude, query)
 	}
 
 	return m.Called(key, longitude, latitude, query).Get(0).(*redis.GeoLocationCmd)
+}*/
+
+func (m *ClientMock) GeoRadiusStore(key string, longitude, latitude float64, query *redis.GeoRadiusQuery) *redis.IntCmd {
+	panic("implement me") //TODO
 }
 
 func (m *ClientMock) GeoRadiusByMember(key, member string, query *redis.GeoRadiusQuery) *redis.GeoLocationCmd {
@@ -1138,12 +1142,16 @@ func (m *ClientMock) GeoRadiusByMember(key, member string, query *redis.GeoRadiu
 	return m.Called(key, member, query).Get(0).(*redis.GeoLocationCmd)
 }
 
-func (m *ClientMock) GeoRadiusByMemberRO(key, member string, query *redis.GeoRadiusQuery) *redis.GeoLocationCmd {
+/*func (m *ClientMock) GeoRadiusByMemberRO(key, member string, query *redis.GeoRadiusQuery) *redis.GeoLocationCmd {
 	if !m.hasStub("GeoRadiusByMemberRO") {
 		return m.client.GeoRadiusByMemberRO(key, member, query)
 	}
 
 	return m.Called(key, member, query).Get(0).(*redis.GeoLocationCmd)
+}*/
+
+func (m *ClientMock) GeoRadiusByMemberStore(key, member string, query *redis.GeoRadiusQuery) *redis.IntCmd {
+	panic("implement me") //TODO
 }
 
 func (m *ClientMock) GeoDist(key string, member1, member2, unit string) *redis.FloatCmd {

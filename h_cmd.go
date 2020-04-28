@@ -1,6 +1,6 @@
 package redismock
 
-import "github.com/go-redis/redis"
+import "github.com/go-redis/redis/v7"
 
 func (m *ClientMock) HDel(key string, fields ...string) *redis.IntCmd {
 	if !m.hasStub("HDel") {
@@ -74,20 +74,20 @@ func (m *ClientMock) HMGet(key string, fields ...string) *redis.SliceCmd {
 	return m.Called(key, fields).Get(0).(*redis.SliceCmd)
 }
 
-func (m *ClientMock) HMSet(key string, fields map[string]interface{}) *redis.StatusCmd {
+func (m *ClientMock) HMSet(key string, values ...interface{}) *redis.BoolCmd {
 	if !m.hasStub("HMSet") {
-		return m.client.HMSet(key, fields)
+		return m.client.HMSet(key, values)
 	}
 
-	return m.Called(key, fields).Get(0).(*redis.StatusCmd)
+	return m.Called(key, values).Get(0).(*redis.BoolCmd)
 }
 
-func (m *ClientMock) HSet(key, field string, value interface{}) *redis.BoolCmd {
+func (m *ClientMock) HSet(key string, values ...interface{}) *redis.IntCmd {
 	if !m.hasStub("HSet") {
-		return m.client.HSet(key, field, value)
+		return m.client.HSet(key, values)
 	}
 
-	return m.Called(key, field, value).Get(0).(*redis.BoolCmd)
+	return m.Called(key, values).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) HSetNX(key, field string, value interface{}) *redis.BoolCmd {

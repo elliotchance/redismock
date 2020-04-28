@@ -1,6 +1,6 @@
 package redismock
 
-import "github.com/go-redis/redis"
+import "github.com/go-redis/redis/v7"
 
 func (m *ClientMock) XDel(stream string, ids ...string) *redis.IntCmd {
 	if !m.hasStub("XDel") {

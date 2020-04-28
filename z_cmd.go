@@ -3,7 +3,7 @@ package redismock
 import (
 	"time"
 
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v7"
 )
 
 func (m *ClientMock) BZPopMax(timeout time.Duration, keys ...string) *redis.ZWithKeyCmd {
@@ -46,7 +46,7 @@ func (m *ClientMock) ZScan(key string, cursor uint64, match string, count int64)
 	return m.Called(key, cursor, match, count).Get(0).(*redis.ScanCmd)
 }
 
-func (m *ClientMock) ZAdd(key string, members ...redis.Z) *redis.IntCmd {
+func (m *ClientMock) ZAdd(key string, members ...*redis.Z) *redis.IntCmd {
 	if !m.hasStub("ZAdd") {
 		return m.client.ZAdd(key, members...)
 	}
@@ -54,7 +54,7 @@ func (m *ClientMock) ZAdd(key string, members ...redis.Z) *redis.IntCmd {
 	return m.Called(key, members).Get(0).(*redis.IntCmd)
 }
 
-func (m *ClientMock) ZAddNX(key string, members ...redis.Z) *redis.IntCmd {
+func (m *ClientMock) ZAddNX(key string, members ...*redis.Z) *redis.IntCmd {
 	if !m.hasStub("ZAddNX") {
 		return m.client.ZAddNX(key, members...)
 	}
@@ -62,7 +62,7 @@ func (m *ClientMock) ZAddNX(key string, members ...redis.Z) *redis.IntCmd {
 	return m.Called(key, members).Get(0).(*redis.IntCmd)
 }
 
-func (m *ClientMock) ZAddXX(key string, members ...redis.Z) *redis.IntCmd {
+func (m *ClientMock) ZAddXX(key string, members ...*redis.Z) *redis.IntCmd {
 	if !m.hasStub("ZAddXX") {
 		return m.client.ZAddXX(key, members...)
 	}
@@ -70,7 +70,7 @@ func (m *ClientMock) ZAddXX(key string, members ...redis.Z) *redis.IntCmd {
 	return m.Called(key, members).Get(0).(*redis.IntCmd)
 }
 
-func (m *ClientMock) ZAddCh(key string, members ...redis.Z) *redis.IntCmd {
+func (m *ClientMock) ZAddCh(key string, members ...*redis.Z) *redis.IntCmd {
 	if !m.hasStub("ZAddCh") {
 		return m.client.ZAddCh(key, members...)
 	}
@@ -78,7 +78,7 @@ func (m *ClientMock) ZAddCh(key string, members ...redis.Z) *redis.IntCmd {
 	return m.Called(key, members).Get(0).(*redis.IntCmd)
 }
 
-func (m *ClientMock) ZAddNXCh(key string, members ...redis.Z) *redis.IntCmd {
+func (m *ClientMock) ZAddNXCh(key string, members ...*redis.Z) *redis.IntCmd {
 	if !m.hasStub("ZAddNXCh") {
 		return m.client.ZAddNXCh(key, members...)
 	}
@@ -86,7 +86,7 @@ func (m *ClientMock) ZAddNXCh(key string, members ...redis.Z) *redis.IntCmd {
 	return m.Called(key, members).Get(0).(*redis.IntCmd)
 }
 
-func (m *ClientMock) ZAddXXCh(key string, members ...redis.Z) *redis.IntCmd {
+func (m *ClientMock) ZAddXXCh(key string, members ...*redis.Z) *redis.IntCmd {
 	if !m.hasStub("ZAddXXCh") {
 		return m.client.ZAddXXCh(key, members...)
 	}
@@ -94,7 +94,7 @@ func (m *ClientMock) ZAddXXCh(key string, members ...redis.Z) *redis.IntCmd {
 	return m.Called(key, members).Get(0).(*redis.IntCmd)
 }
 
-func (m *ClientMock) ZIncr(key string, member redis.Z) *redis.FloatCmd {
+func (m *ClientMock) ZIncr(key string, member *redis.Z) *redis.FloatCmd {
 	if !m.hasStub("ZIncr") {
 		return m.client.ZIncr(key, member)
 	}
@@ -102,7 +102,7 @@ func (m *ClientMock) ZIncr(key string, member redis.Z) *redis.FloatCmd {
 	return m.Called(key, member).Get(0).(*redis.FloatCmd)
 }
 
-func (m *ClientMock) ZIncrNX(key string, member redis.Z) *redis.FloatCmd {
+func (m *ClientMock) ZIncrNX(key string, member *redis.Z) *redis.FloatCmd {
 	if !m.hasStub("ZIncrNX") {
 		return m.client.ZIncrNX(key, member)
 	}
@@ -110,7 +110,7 @@ func (m *ClientMock) ZIncrNX(key string, member redis.Z) *redis.FloatCmd {
 	return m.Called(key, member).Get(0).(*redis.FloatCmd)
 }
 
-func (m *ClientMock) ZIncrXX(key string, member redis.Z) *redis.FloatCmd {
+func (m *ClientMock) ZIncrXX(key string, member *redis.Z) *redis.FloatCmd {
 	if !m.hasStub("ZIncrXX") {
 		return m.client.ZIncrXX(key, member)
 	}
@@ -150,12 +150,12 @@ func (m *ClientMock) ZIncrBy(key string, increment float64, member string) *redi
 	return m.Called(key, increment, member).Get(0).(*redis.FloatCmd)
 }
 
-func (m *ClientMock) ZInterStore(destination string, store redis.ZStore, keys ...string) *redis.IntCmd {
+func (m *ClientMock) ZInterStore(destination string, store *redis.ZStore) *redis.IntCmd {
 	if !m.hasStub("ZInterStore") {
-		return m.client.ZInterStore(destination, store, keys...)
+		return m.client.ZInterStore(destination, store)
 	}
 
-	return m.Called(destination, store, keys).Get(0).(*redis.IntCmd)
+	return m.Called(destination, store).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) ZRange(key string, start, stop int64) *redis.StringSliceCmd {
@@ -174,7 +174,7 @@ func (m *ClientMock) ZRangeWithScores(key string, start, stop int64) *redis.ZSli
 	return m.Called(key, start, stop).Get(0).(*redis.ZSliceCmd)
 }
 
-func (m *ClientMock) ZRangeByScore(key string, opt redis.ZRangeBy) *redis.StringSliceCmd {
+func (m *ClientMock) ZRangeByScore(key string, opt *redis.ZRangeBy) *redis.StringSliceCmd {
 	if !m.hasStub("ZRangeByScore") {
 		return m.client.ZRangeByScore(key, opt)
 	}
@@ -182,7 +182,7 @@ func (m *ClientMock) ZRangeByScore(key string, opt redis.ZRangeBy) *redis.String
 	return m.Called().Get(0).(*redis.StringSliceCmd)
 }
 
-func (m *ClientMock) ZRangeByLex(key string, opt redis.ZRangeBy) *redis.StringSliceCmd {
+func (m *ClientMock) ZRangeByLex(key string, opt *redis.ZRangeBy) *redis.StringSliceCmd {
 	if !m.hasStub("ZRangeByLex") {
 		return m.client.ZRangeByLex(key, opt)
 	}
@@ -190,7 +190,7 @@ func (m *ClientMock) ZRangeByLex(key string, opt redis.ZRangeBy) *redis.StringSl
 	return m.Called(key, opt).Get(0).(*redis.StringSliceCmd)
 }
 
-func (m *ClientMock) ZRangeByScoreWithScores(key string, opt redis.ZRangeBy) *redis.ZSliceCmd {
+func (m *ClientMock) ZRangeByScoreWithScores(key string, opt *redis.ZRangeBy) *redis.ZSliceCmd {
 	if !m.hasStub("ZRangeByScoreWithScores") {
 		return m.client.ZRangeByScoreWithScores(key, opt)
 	}
@@ -254,7 +254,7 @@ func (m *ClientMock) ZRevRangeWithScores(key string, start, stop int64) *redis.Z
 	return m.Called(key, start, stop).Get(0).(*redis.ZSliceCmd)
 }
 
-func (m *ClientMock) ZRevRangeByScore(key string, opt redis.ZRangeBy) *redis.StringSliceCmd {
+func (m *ClientMock) ZRevRangeByScore(key string, opt *redis.ZRangeBy) *redis.StringSliceCmd {
 	if !m.hasStub("ZRevRangeByScore") {
 		return m.client.ZRevRangeByScore(key, opt)
 	}
@@ -262,7 +262,7 @@ func (m *ClientMock) ZRevRangeByScore(key string, opt redis.ZRangeBy) *redis.Str
 	return m.Called(key, opt).Get(0).(*redis.StringSliceCmd)
 }
 
-func (m *ClientMock) ZRevRangeByLex(key string, opt redis.ZRangeBy) *redis.StringSliceCmd {
+func (m *ClientMock) ZRevRangeByLex(key string, opt *redis.ZRangeBy) *redis.StringSliceCmd {
 	if !m.hasStub("ZRevRangeByLex") {
 		return m.client.ZRevRangeByLex(key, opt)
 	}
@@ -270,7 +270,7 @@ func (m *ClientMock) ZRevRangeByLex(key string, opt redis.ZRangeBy) *redis.Strin
 	return m.Called(key, opt).Get(0).(*redis.StringSliceCmd)
 }
 
-func (m *ClientMock) ZRevRangeByScoreWithScores(key string, opt redis.ZRangeBy) *redis.ZSliceCmd {
+func (m *ClientMock) ZRevRangeByScoreWithScores(key string, opt *redis.ZRangeBy) *redis.ZSliceCmd {
 	if !m.hasStub("ZRevRangeByScoreWithScores") {
 		return m.client.ZRevRangeByScoreWithScores(key, opt)
 	}
@@ -294,10 +294,10 @@ func (m *ClientMock) ZScore(key, member string) *redis.FloatCmd {
 	return m.Called(key, member).Get(0).(*redis.FloatCmd)
 }
 
-func (m *ClientMock) ZUnionStore(dest string, store redis.ZStore, keys ...string) *redis.IntCmd {
+func (m *ClientMock) ZUnionStore(dest string, store *redis.ZStore) *redis.IntCmd {
 	if !m.hasStub("ZUnionStore") {
-		return m.client.ZUnionStore(dest, store, keys...)
+		return m.client.ZUnionStore(dest, store)
 	}
 
-	return m.Called(dest, store, keys).Get(0).(*redis.IntCmd)
+	return m.Called(dest, store).Get(0).(*redis.IntCmd)
 }

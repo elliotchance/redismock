@@ -6,7 +6,7 @@ import (
 
 	"github.com/alicebob/miniredis"
 	"github.com/elliotchance/redismock"
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v7"
 	"github.com/stretchr/testify/assert"
 )
 
