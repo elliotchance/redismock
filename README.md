@@ -1,6 +1,6 @@
 # redismock
 
-Package `github.com/haakonmo/redismock` is useful for unit testing
+Package `github.com/elliotchance/redismock` is useful for unit testing
 applications that interact with Redis. It uses the
 [`stretchr/testify` mocking system](https://github.com/stretchr/testify).
 
@@ -48,7 +48,7 @@ import (
 	"testing"
 	"github.com/go-redis/redis"
 	"github.com/alicebob/miniredis"
-	"github.com/haakonmo/redismock"
+	"github.com/elliotchance/redismock"
 	"errors"
 	"github.com/stretchr/testify/assert"
 )
