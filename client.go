@@ -50,6 +50,8 @@ func (m *ClientMock) hasStub(method string) bool {
 }
 
 func (m *ClientMock) Reset() {
-	m.client.FlushAll()
+	if m.client != nil{
+		m.client.FlushAll()
+	}
 	m.ExpectedCalls = make([]*mock.Call, 0)
 }
