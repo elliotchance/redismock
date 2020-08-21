@@ -1,4 +1,4 @@
-module github.com/vearne/redismock
+module github.com/elliotchance/redismock
 
 go 1.13
 

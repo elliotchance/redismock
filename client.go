@@ -54,4 +54,5 @@ func (m *ClientMock) Reset() {
 		m.client.FlushAll()
 	}
 	m.ExpectedCalls = make([]*mock.Call, 0)
+	m.Calls = make([]mock.Call, 0)
 }
