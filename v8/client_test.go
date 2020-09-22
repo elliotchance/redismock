@@ -6,10 +6,9 @@ import (
 	"testing"
 
 	"github.com/alicebob/miniredis"
+	"github.com/elliotchance/redismock/v8"
 	"github.com/go-redis/redis/v8"
 	"github.com/stretchr/testify/assert"
-
-	"github.com/elliotchance/redismock"
 )
 
 // newTestRedis returns a redis.Cmdable.
