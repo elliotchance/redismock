@@ -128,7 +128,7 @@ func (m *ClientMock) Keys(ctx context.Context, pattern string) *redis.StringSlic
 		return m.client.Keys(ctx, pattern)
 	}
 
-	return m.Called(ctx).Get(0).(*redis.StringSliceCmd)
+	return m.Called(ctx, pattern).Get(0).(*redis.StringSliceCmd)
 }
 
 func (m *ClientMock) Migrate(ctx context.Context, host, port, key string, db int, timeout time.Duration) *redis.StatusCmd {
@@ -136,7 +136,7 @@ func (m *ClientMock) Migrate(ctx context.Context, host, port, key string, db int
 		return m.client.Migrate(ctx, host, port, key, db, timeout)
 	}
 
-	return m.Called(ctx).Get(0).(*redis.StatusCmd)
+	return m.Called(ctx, host, port, key, db, timeout).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) Move(ctx context.Context, key string, db int) *redis.BoolCmd {
@@ -144,7 +144,7 @@ func (m *ClientMock) Move(ctx context.Context, key string, db int) *redis.BoolCm
 		return m.client.Move(ctx, key, db)
 	}
 
-	return m.Called(ctx).Get(0).(*redis.BoolCmd)
+	return m.Called(ctx, key, db).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) ObjectRefCount(ctx context.Context, key string) *redis.IntCmd {
@@ -152,7 +152,7 @@ func (m *ClientMock) ObjectRefCount(ctx context.Context, key string) *redis.IntC
 		return m.client.ObjectRefCount(ctx, key)
 	}
 
-	return m.Called(ctx).Get(0).(*redis.IntCmd)
+	return m.Called(ctx, key).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) ObjectEncoding(ctx context.Context, key string) *redis.StringCmd {
@@ -160,7 +160,7 @@ func (m *ClientMock) ObjectEncoding(ctx context.Context, key string) *redis.Stri
 		return m.client.ObjectEncoding(ctx, key)
 	}
 
-	return m.Called(ctx).Get(0).(*redis.StringCmd)
+	return m.Called(ctx, key).Get(0).(*redis.StringCmd)
 }
 
 func (m *ClientMock) ObjectIdleTime(ctx context.Context, key string) *redis.DurationCmd {
@@ -168,7 +168,7 @@ func (m *ClientMock) ObjectIdleTime(ctx context.Context, key string) *redis.Dura
 		return m.client.ObjectIdleTime(ctx, key)
 	}
 
-	return m.Called(ctx).Get(0).(*redis.DurationCmd)
+	return m.Called(ctx, key).Get(0).(*redis.DurationCmd)
 }
 
 func (m *ClientMock) Persist(ctx context.Context, key string) *redis.BoolCmd {
@@ -176,7 +176,7 @@ func (m *ClientMock) Persist(ctx context.Context, key string) *redis.BoolCmd {
 		return m.client.Persist(ctx, key)
 	}
 
-	return m.Called(ctx).Get(0).(*redis.BoolCmd)
+	return m.Called(ctx, key).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) PExpire(ctx context.Context, key string, expiration time.Duration) *redis.BoolCmd {
@@ -184,7 +184,7 @@ func (m *ClientMock) PExpire(ctx context.Context, key string, expiration time.Du
 		return m.client.PExpire(ctx, key, expiration)
 	}
 
-	return m.Called(ctx).Get(0).(*redis.BoolCmd)
+	return m.Called(ctx, key, expiration).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) PExpireAt(ctx context.Context, key string, tm time.Time) *redis.BoolCmd {
@@ -192,7 +192,7 @@ func (m *ClientMock) PExpireAt(ctx context.Context, key string, tm time.Time) *r
 		return m.client.PExpireAt(ctx, key, tm)
 	}
 
-	return m.Called(ctx).Get(0).(*redis.BoolCmd)
+	return m.Called(ctx, key, tm).Get(0).(*redis.BoolCmd)
 }
 
 func (m *ClientMock) PTTL(ctx context.Context, key string) *redis.DurationCmd {
@@ -200,7 +200,7 @@ func (m *ClientMock) PTTL(ctx context.Context, key string) *redis.DurationCmd {
 		return m.client.PTTL(ctx, key)
 	}
 
-	return m.Called(ctx).Get(0).(*redis.DurationCmd)
+	return m.Called(ctx, key).Get(0).(*redis.DurationCmd)
 }
 
 func (m *ClientMock) RandomKey(ctx context.Context) *redis.StringCmd {
@@ -376,7 +376,7 @@ func (m *ClientMock) Decr(ctx context.Context, key string) *redis.IntCmd {
 		return m.client.Decr(ctx, key)
 	}
 
-	return m.Called(ctx).Get(0).(*redis.IntCmd)
+	return m.Called(ctx, key).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) DecrBy(ctx context.Context, key string, decrement int64) *redis.IntCmd {
@@ -664,7 +664,7 @@ func (m *ClientMock) RPushX(ctx context.Context, key string, values ...interface
 		return m.client.RPushX(ctx, key, values)
 	}
 
-	return m.Called(ctx, ctx, key, values).Get(0).(*redis.IntCmd)
+	return m.Called(ctx, key, values).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) PFAdd(ctx context.Context, key string, els ...interface{}) *redis.IntCmd {
@@ -672,7 +672,7 @@ func (m *ClientMock) PFAdd(ctx context.Context, key string, els ...interface{}) 
 		return m.client.PFAdd(ctx, key, els...)
 	}
 
-	return m.Called(ctx, ctx, key, els).Get(0).(*redis.IntCmd)
+	return m.Called(ctx, key, els).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) PFCount(ctx context.Context, keys ...string) *redis.IntCmd {
@@ -680,7 +680,7 @@ func (m *ClientMock) PFCount(ctx context.Context, keys ...string) *redis.IntCmd 
 		return m.client.PFCount(ctx, keys...)
 	}
 
-	return m.Called(ctx, ctx, keys).Get(0).(*redis.IntCmd)
+	return m.Called(ctx, keys).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) PFMerge(ctx context.Context, dest string, keys ...string) *redis.StatusCmd {
@@ -688,7 +688,7 @@ func (m *ClientMock) PFMerge(ctx context.Context, dest string, keys ...string) *
 		return m.client.PFMerge(ctx, dest, keys...)
 	}
 
-	return m.Called(ctx, ctx, dest, keys).Get(0).(*redis.StatusCmd)
+	return m.Called(ctx, dest, keys).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) BgRewriteAOF(ctx context.Context) *redis.StatusCmd {
@@ -696,7 +696,7 @@ func (m *ClientMock) BgRewriteAOF(ctx context.Context) *redis.StatusCmd {
 		return m.client.BgRewriteAOF(ctx)
 	}
 
-	return m.Called(ctx, ctx).Get(0).(*redis.StatusCmd)
+	return m.Called(ctx).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) BgSave(ctx context.Context) *redis.StatusCmd {
@@ -704,7 +704,7 @@ func (m *ClientMock) BgSave(ctx context.Context) *redis.StatusCmd {
 		return m.client.BgSave(ctx)
 	}
 
-	return m.Called(ctx, ctx).Get(0).(*redis.StatusCmd)
+	return m.Called(ctx).Get(0).(*redis.StatusCmd)
 }
 
 func (m *ClientMock) ClientKill(ctx context.Context, ipPort string) *redis.StatusCmd {
