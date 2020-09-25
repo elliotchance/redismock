@@ -189,3 +189,11 @@ func (m *ClientMock) XInfoGroups(ctx context.Context, key string) *redis.XInfoGr
 
 	return m.Called(ctx, key).Get(0).(*redis.XInfoGroupsCmd)
 }
+
+func (m *ClientMock) XInfoStream(ctx context.Context, key string) *redis.XInfoStreamCmd {
+	if !m.hasStub("XInfoStream") {
+		return m.client.XInfoStream(ctx, key)
+	}
+
+	return m.Called(ctx, key).Get(0).(*redis.XInfoStreamCmd)
+}
