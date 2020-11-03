@@ -475,6 +475,14 @@ func (m *ClientMock) Set(ctx context.Context, key string, value interface{}, exp
 	return m.Called(ctx, key, value, expiration).Get(0).(*redis.StatusCmd)
 }
 
+func (m *ClientMock) SetEX(ctx context.Context, key string, value interface{}, expiration time.Duration) *redis.StatusCmd {
+	if !m.hasStub("SetEX") {
+		return m.client.Set(ctx, key, value, expiration)
+	}
+
+	return m.Called(ctx, key, value, expiration).Get(0).(*redis.StatusCmd)
+}
+
 func (m *ClientMock) SetBit(ctx context.Context, key string, offset int64, value int) *redis.IntCmd {
 	if !m.hasStub("SetBit") {
 		return m.client.SetBit(ctx, key, offset, value)
