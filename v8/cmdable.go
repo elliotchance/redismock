@@ -595,6 +595,14 @@ func (m *ClientMock) LPos(ctx context.Context, key string, value string, args re
 	return m.Called(ctx, key, value, args).Get(0).(*redis.IntCmd)
 }
 
+func (m *ClientMock) LPosCount(ctx context.Context, key string, value string, count int64, args LPosArgs) *redis.IntCmd {
+	if !m.hasStub("LPosCount") {
+		return m.client.LPosCount(ctx, key, value, count, args)
+	}
+
+	return m.Called(ctx, key, value, count, args).Get(0).(*redis.IntCmd)
+}
+
 func (m *ClientMock) LPop(ctx context.Context, key string) *redis.StringCmd {
 	if !m.hasStub("LPop") {
 		return m.client.LPop(ctx, key)
