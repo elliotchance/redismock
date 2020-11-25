@@ -587,6 +587,14 @@ func (m *ClientMock) LLen(ctx context.Context, key string) *redis.IntCmd {
 	return m.Called(ctx, key).Get(0).(*redis.IntCmd)
 }
 
+func (m *ClientMock) LPos(ctx context.Context, key string, value string, args redis.LPosArgs) *redis.IntCmd {
+	if !m.hasStub("LPos") {
+		return m.client.LPos(ctx, key, value, args)
+	}
+
+	return m.Called(ctx, key, value, args).Get(0).(*redis.IntCmd)
+}
+
 func (m *ClientMock) LPop(ctx context.Context, key string) *redis.StringCmd {
 	if !m.hasStub("LPop") {
 		return m.client.LPop(ctx, key)
