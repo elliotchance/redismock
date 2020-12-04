@@ -595,7 +595,7 @@ func (m *ClientMock) LPos(ctx context.Context, key string, value string, args re
 	return m.Called(ctx, key, value, args).Get(0).(*redis.IntCmd)
 }
 
-func (m *ClientMock) LPosCount(ctx context.Context, key string, value string, count int64, args redis.LPosArgs) *redis.IntCmd {
+func (m *ClientMock) LPosCount(ctx context.Context, key string, value string, count int64, args redis.LPosArgs) *redis.IntSliceCmd {
 	if !m.hasStub("LPosCount") {
 		return m.client.LPosCount(ctx, key, value, count, args)
 	}
