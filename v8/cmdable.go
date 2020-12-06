@@ -600,7 +600,7 @@ func (m *ClientMock) LPosCount(ctx context.Context, key string, value string, co
 		return m.client.LPosCount(ctx, key, value, count, args)
 	}
 
-	return m.Called(ctx, key, value, count, args).Get(0).(*redis.IntCmd)
+	return m.Called(ctx, key, value, count, args).Get(0).(*redis.IntSliceCmd)
 }
 
 func (m *ClientMock) LPop(ctx context.Context, key string) *redis.StringCmd {
