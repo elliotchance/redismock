@@ -91,7 +91,7 @@ func (m *ClientMock) HSet(ctx context.Context, key string, values ...interface{}
 		return m.client.HSet(ctx, key, values)
 	}
 
-	return m.Called(ctx, key, key, values).Get(0).(*redis.IntCmd)
+	return m.Called(ctx, key, values).Get(0).(*redis.IntCmd)
 }
 
 func (m *ClientMock) HSetNX(ctx context.Context, key, field string, value interface{}) *redis.BoolCmd {
