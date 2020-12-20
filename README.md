@@ -47,7 +47,7 @@ test gets an empty Redis database each time.
 import (
 	"testing"
 	"github.com/go-redis/redis"
-	"github.com/alicebob/miniredis"
+	"github.com/alicebob/miniredis/v2"
 	"github.com/elliotchance/redismock"
 	"errors"
 	"github.com/stretchr/testify/assert"
