@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/alicebob/miniredis/v2 v2.14.1
-	github.com/go-redis/redis/v8 v8.3.3
+	github.com/go-redis/redis/v8 v8.4.4
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/stretchr/testify v1.6.1
 	github.com/yuin/gopher-lua v0.0.0-20200816102855-ee81675732da // indirect
