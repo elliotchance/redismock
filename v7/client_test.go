@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/alicebob/miniredis"
+	"github.com/alicebob/miniredis/v2"
 	"github.com/elliotchance/redismock/v7"
 	"github.com/go-redis/redis/v7"
 	"github.com/stretchr/testify/assert"
