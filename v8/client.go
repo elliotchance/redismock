@@ -12,6 +12,7 @@ import (
 
 type ClientMock struct {
 	mock.Mock
+	redis.Cmdable
 	client *redis.Client
 }
 
