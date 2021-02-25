@@ -1242,3 +1242,11 @@ func (m *ClientMock) ClientID(ctx context.Context) *redis.IntCmd {
 
 	return m.Called(ctx).Get(0).(*redis.IntCmd)
 }
+
+func (m *ClientMock) ScanType(ctx context.Context, cursor uint64, match string, count int64, keyType string) *redis.ScanCmd {
+	if !m.hasStub("ScanType") {
+		return m.client.ScanType(ctx, cursor, match, count, keyType)
+	}
+
+	return m.Called(ctx, cursor, match, count, keyType).Get(0).(*redis.ScanCmd)
+}
