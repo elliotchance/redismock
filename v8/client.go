@@ -6,11 +6,15 @@
 package redismock
 
 import (
+	"sync"
+
 	"github.com/go-redis/redis/v8"
 	"github.com/stretchr/testify/mock"
 )
 
 type ClientMock struct {
+	mu sync.Mutex
+
 	mock.Mock
 	redis.Cmdable
 	client *redis.Client
@@ -41,6 +45,9 @@ func NewNiceMock(client *redis.Client) *ClientMock {
 // method to determine if the method call should be passed through to the real
 // redis client.
 func (m *ClientMock) hasStub(method string) bool {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
 	for _, call := range m.ExpectedCalls {
 		if call.Method == method && call.Repeatability > -1 {
 			return true
@@ -48,4 +55,64 @@ func (m *ClientMock) hasStub(method string) bool {
 	}
 
 	return false
+}
+
+//
+// Implmenent all the required mock.Mock functions but the sync.Mutex to make the library thread safe
+//
+
+func (m *ClientMock) Test(t mock.TestingT) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	m.Mock.Test(t)
+}
+
+func (m *ClientMock) On(methodName string, arguments ...interface{}) *mock.Call {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	return m.Mock.On(methodName, arguments...)
+}
+
+func (m *ClientMock) MethodCalled(methodName string, arguments ...interface{}) mock.Arguments {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	return m.Mock.MethodCalled(methodName, arguments...)
+}
+
+func (m *ClientMock) AssertExpectations(t mock.TestingT) bool {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	return m.Mock.AssertExpectations(t)
+}
+
+func (m *ClientMock) AssertNumberOfCalls(t mock.TestingT, methodName string, expectedCalls int) bool {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	return m.Mock.AssertNumberOfCalls(t, methodName, expectedCalls)
+}
+
+func (m *ClientMock) AssertCalled(t mock.TestingT, methodName string, arguments ...interface{}) bool {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	return m.Mock.AssertCalled(t, methodName, arguments...)
+}
+
+func (m *ClientMock) AssertNotCalled(t mock.TestingT, methodName string, arguments ...interface{}) bool {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	return m.Mock.AssertNotCalled(t, methodName, arguments...)
+}
+
+func (m *ClientMock) IsMethodCallable(t mock.TestingT, methodName string, arguments ...interface{}) bool {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	return m.Mock.IsMethodCallable(t, methodName, arguments...)
 }
