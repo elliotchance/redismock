@@ -403,6 +403,14 @@ func (m *ClientMock) GetBit(ctx context.Context, key string, offset int64) *redi
 	return m.Called(ctx, key, offset).Get(0).(*redis.IntCmd)
 }
 
+func (m *ClientMock) GetEx(ctx context.Context, key string, expiration time.Duration) *redis.StringCmd {
+	if !m.hasStub("GetEx") {
+		return m.client.GetEx(ctx, key, expiration)
+	}
+
+	return m.Called(ctx, key, expiration).Get(0).(*redis.StringCmd)
+}
+
 func (m *ClientMock) GetRange(ctx context.Context, key string, start, end int64) *redis.StringCmd {
 	if !m.hasStub("GetRange") {
 		return m.client.GetRange(ctx, key, start, end)
