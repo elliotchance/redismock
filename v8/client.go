@@ -6,6 +6,7 @@
 package redismock
 
 import (
+	"context"
 	"sync"
 
 	"github.com/go-redis/redis/v8"
@@ -18,6 +19,60 @@ type ClientMock struct {
 	mock.Mock
 	redis.Cmdable
 	client redis.UniversalClient
+	ctx    context.Context
+}
+
+func (m *ClientMock) Context() context.Context {
+	return m.ctx
+}
+
+func (m *ClientMock) AddHook(hook redis.Hook) {
+	m.client.AddHook(hook)
+}
+
+func (m *ClientMock) Do(ctx context.Context, args ...interface{}) *redis.Cmd {
+	if !m.hasStub("Watch") {
+		return m.client.Do(ctx, args)
+	}
+	return m.Called().Get(0).(*redis.Cmd)
+}
+
+func (m *ClientMock) Process(ctx context.Context, cmd redis.Cmder) error {
+	if !m.hasStub("Watch") {
+		return m.client.Process(ctx, cmd)
+	}
+	args := m.Called()
+	return args.Get(0).(error)
+}
+
+func (m *ClientMock) Subscribe(ctx context.Context, channels ...string) *redis.PubSub {
+	if !m.hasStub("Subscribe") {
+		return m.client.Subscribe(ctx, channels...)
+	}
+	return m.Called().Get(0).(*redis.PubSub)
+}
+
+func (m *ClientMock) PSubscribe(ctx context.Context, channels ...string) *redis.PubSub {
+
+	if !m.hasStub("PSubscribe") {
+		return m.client.PSubscribe(ctx, channels...)
+	}
+	return m.Called().Get(0).(*redis.PubSub)
+}
+
+func (m *ClientMock) Close() error {
+	if !m.hasStub("Watch") {
+		return m.client.Close()
+	}
+	args := m.Called()
+	return args.Get(0).(error)
+}
+
+func (m *ClientMock) PoolStats() *redis.PoolStats {
+	if !m.hasStub("PoolStats") {
+		return m.client.PoolStats()
+	}
+	return m.Called().Get(0).(*redis.PoolStats)
 }
 
 // NewMock creates a hollow mock. You will need to stub all commands that you
