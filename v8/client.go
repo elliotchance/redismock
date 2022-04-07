@@ -17,7 +17,7 @@ type ClientMock struct {
 
 	mock.Mock
 	redis.Cmdable
-	client *redis.Client
+	client redis.UniversalClient
 }
 
 // NewMock creates a hollow mock. You will need to stub all commands that you
@@ -34,7 +34,7 @@ func NewMock() *ClientMock {
 //
 // This is most useful when you want a real Redis instance, but you need to stub
 // off certain commands or behaviors. See NewMock().
-func NewNiceMock(client *redis.Client) *ClientMock {
+func NewNiceMock(client redis.UniversalClient) *ClientMock {
 	m := NewMock()
 	m.client = client
 
