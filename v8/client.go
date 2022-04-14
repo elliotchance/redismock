@@ -19,11 +19,11 @@ type ClientMock struct {
 	mock.Mock
 	redis.Cmdable
 	client redis.UniversalClient
-	ctx    context.Context
+	Ctx    context.Context
 }
 
 func (m *ClientMock) Context() context.Context {
-	return m.ctx
+	return m.Ctx
 }
 
 func (m *ClientMock) AddHook(hook redis.Hook) {
@@ -31,14 +31,14 @@ func (m *ClientMock) AddHook(hook redis.Hook) {
 }
 
 func (m *ClientMock) Do(ctx context.Context, args ...interface{}) *redis.Cmd {
-	if !m.hasStub("Watch") {
+	if !m.hasStub("Do") {
 		return m.client.Do(ctx, args)
 	}
 	return m.Called().Get(0).(*redis.Cmd)
 }
 
 func (m *ClientMock) Process(ctx context.Context, cmd redis.Cmder) error {
-	if !m.hasStub("Watch") {
+	if !m.hasStub("Process") {
 		return m.client.Process(ctx, cmd)
 	}
 	args := m.Called()
@@ -61,7 +61,7 @@ func (m *ClientMock) PSubscribe(ctx context.Context, channels ...string) *redis.
 }
 
 func (m *ClientMock) Close() error {
-	if !m.hasStub("Watch") {
+	if !m.hasStub("Close") {
 		return m.client.Close()
 	}
 	args := m.Called()
