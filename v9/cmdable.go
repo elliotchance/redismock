@@ -763,12 +763,12 @@ func (m *ClientMock) ClientPause(ctx context.Context, dur time.Duration) *redis.
 	return m.Called(ctx, dur).Get(0).(*redis.BoolCmd)
 }
 
-func (m *ClientMock) ConfigGet(ctx context.Context, parameter string) *redis.SliceCmd {
+func (m *ClientMock) ConfigGet(ctx context.Context, parameter string) *redis.MapStringStringCmd {
 	if !m.hasStub("ConfigGet") {
 		return m.client.ConfigGet(ctx, parameter)
 	}
 
-	return m.Called(ctx, parameter).Get(0).(*redis.SliceCmd)
+	return m.Called(ctx, parameter).Get(0).(*redis.MapStringStringCmd)
 }
 
 func (m *ClientMock) ConfigResetStat(ctx context.Context) *redis.StatusCmd {
@@ -971,12 +971,12 @@ func (m *ClientMock) PubSubChannels(ctx context.Context, pattern string) *redis.
 	return m.Called(ctx, pattern).Get(0).(*redis.StringSliceCmd)
 }
 
-func (m *ClientMock) PubSubNumSub(ctx context.Context, channels ...string) *redis.StringIntMapCmd {
+func (m *ClientMock) PubSubNumSub(ctx context.Context, channels ...string) *redis.MapStringIntCmd {
 	if !m.hasStub("PubSubNumSub") {
 		return m.client.PubSubNumSub(ctx, channels...)
 	}
 
-	return m.Called(ctx, channels).Get(0).(*redis.StringIntMapCmd)
+	return m.Called(ctx, channels).Get(0).(*redis.MapStringIntCmd)
 }
 
 func (m *ClientMock) PubSubNumPat(ctx context.Context) *redis.IntCmd {
